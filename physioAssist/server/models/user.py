@@ -7,10 +7,10 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    email = Column(String(255), unique=True, nulable=False)
-    password_hash = Column(String)(255), nullable=False
+    email = Column(String(255), unique=True, nullable=False)
+    password_hash = Column(String(255), nullable=False)
     fullname = Column(String(255), nullable=False)
-    gender = Column(String(20), nullable=True)
+    gender = Column(String(20), nullable=False)
     avatar = Column(String(255), nullable=False)
     language_preference = Column(String(2), default='EN')
     created_at = Column(DateTime(timezone=True), server_default=func.now())

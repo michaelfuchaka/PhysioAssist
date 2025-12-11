@@ -1,12 +1,16 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Load .env file
 
 app = Flask(__name__)
 
 
-# Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:physiAssist%402026.@localhost:5432/physioassist_db'
+# Database configurationphysiAssist
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
