@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from app import db
+from extensions import db
 
 
 class Draft(db.Model):
@@ -17,7 +17,7 @@ class Draft(db.Model):
 
     saved_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    # Relationship back to user
+    # Relationships                 
     user = relationship("User", back_populates="drafts")
 
     def __repr__(self):
