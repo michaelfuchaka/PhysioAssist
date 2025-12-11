@@ -17,6 +17,7 @@ def create_app():
     # JWT Configuration ✅ ADD THESE LINES
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
     app.config['JWT_TOKEN_LOCATION'] = ['cookies'] 
+    app.config["JWT_ACCESS_COOKIE_NAME"] = "access_token" 
     app.config['JWT_COOKIE_CSRF_PROTECT'] = False   #eneble CSRF protection in production
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False  
 

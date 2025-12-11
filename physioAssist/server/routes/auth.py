@@ -67,10 +67,12 @@ def login():
     user = User.query.filter_by(email=email).first()
 
     
-    if not user.check_password(password):
+    if not user or not user.check_password(password):
+        return jsonify({'error': 'Invalid email or password'}), 401
+
      
     #  token lasts in 3 months
-     acces_token = create_access_token(
+    acces_token = create_access_token(
         identity=user.id,
         expires_delta=timedelta(days=90)
     )
@@ -101,7 +103,7 @@ def login():
     return response
 
 
-auth_bp.route('/logout', methods=['POST'])
+@auth_bp.route('/logout', methods=['POST'])
 @jwt_required()  
 def logout():
     response = make_response(jsonify({
@@ -132,7 +134,7 @@ def get_current_user():
     return jsonify({
         'user': {
             'id': user.id,
-            'full_name': user.full_name,
+            'name': user.fullname,
             'email': user.email,
             'avatar': user.avatar,
             'language_preference': user.language_preference
