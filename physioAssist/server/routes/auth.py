@@ -72,7 +72,7 @@ def login():
 
      
     #  token lasts in 3 months
-    acces_token = create_access_token(
+    access_token = create_access_token(
         identity=user.id,
         expires_delta=timedelta(days=90)
     )
@@ -80,6 +80,7 @@ def login():
     # Create response
     response = make_response(jsonify({
         'message': 'Login successful',
+        'token': access_token,
         'user':{
             'id':user.id,
             'name':user.fullname,
@@ -93,7 +94,7 @@ def login():
      # Set token in httpOnly cookie not accessible via JS
     response.set_cookie(
         "access_token",
-        value=acces_token,
+        value=access_token,
         httponly=True,
         secure=False,
         samesite='Lax',
