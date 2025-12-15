@@ -2,6 +2,7 @@
 import React , { useEffect, useState }  from 'react'
 import Sidebar from "@/components/Sidebar";
 import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 import { getCurrentUser } from '@/lib/api';
 
 
@@ -33,9 +34,9 @@ const Dashboard = () => {
         <div className='ml-4'>
         <nav>
         <div className="flex items-center gap-2 text-lg font-semibold">
-            <a href="/home">Home</a>
+            <Link href="/">Home</Link>
             <ChevronRight size={24} className="" />
-            <span className="">Dashboard</span>
+            <Link href="/dashboard">Dashboard</Link>
         </div>
         </nav>
         
