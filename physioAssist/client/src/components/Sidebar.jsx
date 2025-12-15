@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { getCurrentUser } from '@/lib/api';
 
 const Sidebar = () => {
@@ -11,7 +12,7 @@ const Sidebar = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-             
+                const userData = await getCurrentUser();
                 setUser(userData);
             } catch (error) {
                 console.error('Failed to fetch user:', error);
@@ -79,32 +80,37 @@ const Sidebar = () => {
                     </div>
                 </div>
             ) : null}
-
             {/* Navigation */}
             <nav className="mt-24">
                 <ul className="space-y-2">
                     <li>
-                        <a href="/dashboard" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <Link href="/" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                            Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/dashboard" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
                             Dashboard
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/new-case" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <Link href="/new-case" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
                             New Case
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/case-history" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <Link href="/case-history" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
                             Case History
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/settings" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <Link href="/settings" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
                             Settings
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </nav>
+            
 
             {/* Language Toggle & Log Out at Bottom */}
             <div className="absolute bottom-4 left-4 right-4 space-y-2 border-t border-gray-200 pt-4">

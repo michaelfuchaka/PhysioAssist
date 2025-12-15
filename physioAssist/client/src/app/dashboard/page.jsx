@@ -2,6 +2,7 @@
 import React , { useEffect, useState }  from 'react'
 import Sidebar from "@/components/Sidebar";
 import { ChevronRight } from 'lucide-react';
+import { getCurrentUser } from '@/lib/api';
 
 
 const Dashboard = () => {
