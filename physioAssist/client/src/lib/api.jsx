@@ -13,7 +13,7 @@ export async function getCurrentUser(){
     if(!response.ok){
         return null;
       }
-  // If the response IS OK, proceed to parse the JSON
+ 
      const data = await response.json();
     return data.user;    
    

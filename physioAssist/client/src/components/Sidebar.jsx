@@ -11,7 +11,7 @@ const Sidebar = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const userData = await getCurrentUser();
+             
                 setUser(userData);
             } catch (error) {
                 console.error('Failed to fetch user:', error);
