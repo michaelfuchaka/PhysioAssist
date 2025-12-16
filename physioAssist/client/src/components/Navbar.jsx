@@ -27,8 +27,8 @@ const Navbar = () => {
         )}
     </div>
     {/* Navigation   */}
-    <div className="flex-1 flex justify-center pr-16">
-      <ul className='flex gap-32 ml-8 text-2xl'>
+    <div className="flex-1 flex justify-center ">
+      <ul className='flex gap-16 ml-8 text-2xl'>
         <li>
         <Link href="/" className=" text-[#324B6F]  hover:bg-gray-100 transition-colors duration-200">
             Home
