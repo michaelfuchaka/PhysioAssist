@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <div className='fixed top-0 left-0 w-full z-50'>
-        <nav className='flex items-center justify-between h-16 bg-white px-4 md:px-8'> 
+        <nav className='flex items-center justify-between h-16 bg-white px-4 md:px-8 relative z-50'> 
         {/* Logo */}
     <div className='shrink-0'>
         {imageError ? (
@@ -85,7 +85,7 @@ const Navbar = () => {
         {/* Hamburger Button */}
         <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className='w-10 h-10 flex flex-col justify-center items-center gap-1.5'
+            className='w-10 h-10 flex flex-col justify-center items-center gap-1.5 relative z-70'
             aria-label="Menu"
         >
             <span className={`w-6 h-0.5 bg-[#324B6F] transition-all duration-300
@@ -103,12 +103,14 @@ const Navbar = () => {
     <>
         {/* Backdrop */}
         <div 
-            className='md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40'
+            className='md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 '
+            style={{ animation: 'fadeIn 0.3s ease-out' }}
             onClick={closeMenu}
         ></div>
          {/* Slide-in Menu */}
-        <div className='md:hidden fixed top-0 right-0 h-full w-64 bg-white shadow-2xl z-50'>
-        <div className='flex flex-col p-8 pt-20'>
+        <div className='md:hidden fixed top-16 right-0 h-[calc(100%-4rem)] w-64 bg-white shadow-2xl z-50 '
+         style={{ animation: 'slideIn 0.3s ease-out' }}>
+        <div className='flex flex-col p-8 pt-8'>
             <Link 
                 href="/"
                 onClick={closeMenu}
