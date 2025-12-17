@@ -57,7 +57,7 @@ const Navbar = () => {
         </Link>
         </li>
         <li>
-        <Link href="/#How-it-works" className=" text-[#324B6F]  hover:text-[#3D7AC4] 
+        <Link href="/#how-it-works" className=" text-[#324B6F]  hover:text-[#3D7AC4] 
         transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 
         after:h-0.5 after:w-0 after:bg-[#3D7AC4] after:transition-all after:duration-300 
         hover:after:w-full">
@@ -121,7 +121,7 @@ const Navbar = () => {
             </Link>
             
             <Link 
-                href="/#how-it-works"
+                href="/#how-it-works" 
                 onClick={closeMenu}
                 className='text-[#324B6F] text-xl py-4 border-b border-gray-200 
                 hover:text-[#3D7AC4] hover:pl-2 transition-all duration-200'
