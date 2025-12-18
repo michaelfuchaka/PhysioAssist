@@ -4,13 +4,8 @@ import Image from 'next/image';
 import { FiClipboard } from 'react-icons/fi';
 import { FaBrain } from 'react-icons/fa';
 import { HiOutlineLightBulb } from 'react-icons/hi';
-import { MdOutlineAssignment } from 'react-icons/md';
-import {MdOutlineSearch } from "react-icons/md";
-import { MdAssignmentAdd } from "react-icons/md";
-import { MdLanguage } from "react-icons/md";
-
-
-
+import { MdOutlineAssignment, MdLanguage , 
+ MdAssignmentAdd,MdOutlineSearch  } from 'react-icons/md';
 
 
 export default function Home() {
@@ -23,7 +18,8 @@ export default function Home() {
 
       <main >
        {/* Hero Section */}
-      <div className='relative h-[70vh] md:h-[80vh] lg:h-[600px] flex items-center justify-center  '>
+      <div className='relative h-[70vh] md:h-[80vh] lg:h-[600px] flex items-center 
+      justify-center  '>
         <Image
           src='/assets/heroImg.png'
           alt='Hero Image'
@@ -31,21 +27,20 @@ export default function Home() {
           className='object-cover'
           priority
           />
+           <div className='absolute inset-0 bg-linear-to-r from-black/50 to-transparent'></div>
+
         <div className='relative z-10 pt-8 px-2 max-w-2xl md:px-12 lg:px-16 ml-10 md:ml-6 lg:ml-2  text-left leading-height'>
-          <h1 className='text-3xl md:text-2xl lg:text-4xl font-semibold text-[#1E3A5F] 
-          text-shadow-[0_1px_2px_rgba(0,0,0,0.1)] '
+          <h1 className='text-3xl md:text-2xl lg:text-4xl font-semibold text-white '
             >
             Supporting Physiotherapists in Clinical Decision Making
           </h1>
-          <p className='text-lg md:text-xl text-[#11203d] font-medium mt-4
-           text-shadow-[0_1px_2px_rgba(0,0,0,0.1)]'
-            >
+          <p className='text-lg md:text-xl text-white font-medium mt-4' >
           AI-powered guidance for faster evaluations, note taking, and treatment planning  
           </p>
 
-          <button className='text-[#FFFFFF] mt-8 font-semibold ml-24 text-xl bg-[#324B6F] px-6 py-3 
-          border-2  border-[#324B6F] rounded-[20px] hover:bg-white hover:text-[#324B6F] 
-          transition-all duration-300 '>
+          <button className='text-[#FFFFFF] mt-8 font-semibold  text-xl bg-[#324B6F] px-8 py-4 
+          border-2  border-[#324B6F] rounded-[20px]  shadow-lg hover:shadow-xl hover:bg-white hover:text-[#324B6F] 
+          transition-all duration-300 hover:-translate-y-1 '>
           Start Assessment
         </button>
         </div>
@@ -53,12 +48,12 @@ export default function Home() {
         </div>
 
      { /* how it works section */}
-      <div id = 'how-it-works' className='scroll-mt-20  text-[#000000] mt-12 mb-8 '>
+      <div id = 'how-it-works' className='scroll-mt-20  text-[#000000]  py-24 '>
         <h1 className=' text-3xl md:text-4xl font-semibold  flex items-center 
         justify-center mb-10'>
           How It Works</h1>
       
-       <div className="flex flex-col md:flex-row justify-between  gap-8 px-6 md:px-12">
+       <div className="flex flex-col md:flex-row justify-between items-center  gap-8 px-6 md:px-12">
        {/* card 1*/}
         <div  className="flex flex-col items-center text-center">
            <MdOutlineAssignment size={64} className="text-[#324B6F]" />
@@ -70,6 +65,8 @@ export default function Home() {
 
           </p>
         </div> 
+         {/* arrow */}
+        <div className="hidden md:block text-[#324B6F] text-4xl  animate-pulse">→</div>
 
        {/* Card 2 */}
       <div className="flex flex-col items-center text-center">
@@ -81,7 +78,9 @@ export default function Home() {
             Cross-reference against medical data
           </p>
         </div>    
-     
+        {/* arrow */}
+         <div className="hidden md:block text-[#324B6F] text-4xl  animate-pulse">→</div>
+
        {/* Card 3 */}
        <div className="flex flex-col items-center text-center">
             <HiOutlineLightBulb size={64} className="text-[#324B6F]" />
@@ -96,44 +95,67 @@ export default function Home() {
       </div> 
             
      {/* features */}
-     <div className='text-[#000000] mt-16 mb-8'>
+     <div className='text-[#000000] py-16  '>
       <h2 className=' text-2xl md:text-3xl font-semibold  flex items-center 
         justify-center mb-10'>
         Powerful Features For Modern Physiotherapy Practice</h2>
 
+      <div className="flex flex-col md:flex-row justify-between gap-8 px-6 md:px-12 
+      items-center md:items-stretch">
       {/* feature 1 */}
-       <div  className="flex flex-col items-center text-center max-w-sm mx-auto my-10 p-6 bg-white border border-solid border-[#324B6F] rounded-[10px] shadow-lg">
-           <MdOutlineSearch size={64} className="text-[#324B6F]" />
+       <div  className="flex flex-col items-center text-center max-w-sm  p-6
+        bg-white border border-solid border-[#324B6F] rounded-[10px] shadow-md hover:shadow-xl hover:-translate-y-2  transition-all duration-300 cursor-pointer ">
+          <div className="group">
+          <MdOutlineSearch size={64} className="text-[#324B6F] group-hover:scale-110 transition-transform duration-300" />
+         </div >
           <h2 className='font-semibold text-xl mt-4'>
             Smart Condition Matching 
           </h2>
-          <p className='mt-2 '>
-           AI analyzes patient symptoms against a comprehensive physiotherapy knowledge base to suggest possible conditions with clinical reasoning 
+          <p className='mt-2 leading-relaxed'>
+           AI analyzes patient symptoms against a comprehensive physiotherapy
+            knowledge base to suggest possible conditions with clinical reasoning 
 
           </p>
         </div> 
 
       {/* feature 2 */}
-       <div  className="flex flex-col items-center text-center max-w-sm mx-auto my-10 p-6 bg-white border border-solid border-[#324B6F] rounded-[10px] shadow-lg">
-           <MdAssignmentAdd size={64} className="text-[#324B6F]" />
+       <div  className="flex flex-col items-center text-center max-w-sm  p-6 bg-white
+        border border-solid border-[#324B6F] rounded-[10px] shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+           <div className="group">
+           <MdAssignmentAdd size={64} className="text-[#324B6F] group-hover:scale-110 transition-transform duration-300" />
+            </div>
           <h2 className='font-semibold text-xl mt-4'>
             Auto-generated SOAP notes
           </h2>
-          <p className='mt-2 '>
-            Professional clinical documentation in seconds. Automatically generate complete SOAP notes from your assessments and save 70-90% of documentation time
+          <p className='mt-2 leading-relaxed'>
+            Professional clinical documentation in seconds. Automatically generate 
+            complete SOAP notes from your assessments and save 70-90% of documentation 
+            time
           </p>
         </div> 
 
       {/* feature 3 */}
-       <div  className="flex flex-col items-center text-center max-w-sm mx-auto my-10 p-6 bg-white border border-solid border-[#324B6F] rounded-[10px] shadow-lg">
-           <MdLanguage size={64} className="text-[#324B6F]" />
+       <div  className="flex flex-col items-center text-center max-w-sm  p-6 bg-white
+        border border-solid border-[#324B6F] rounded-[10px] shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+         <div className="group">
+           <MdLanguage size={64} className="text-[#324B6F] group-hover:scale-110 transition-transform duration-300" />
+            </div>
           <h2 className='font-semibold text-xl mt-4'>
             Multilingual Support
           </h2>
-          <p className='mt-2 '>
-           Generate reports and treatment plans in multiple languages. Full interface translation helps you communicate clearly with diverse patient populations
+          <p className='mt-2 leading-relaxed'>
+           Generate reports and treatment plans in multiple languages. Full interface 
+           translation helps you communicate clearly with diverse patient populations
           </p>
-        </div>     
+        </div> 
+        </div>    
+     </div>
+
+     {/* FAQ */}
+     <div className='text-[#000000] py-16 bg-[#EFF6FF] '> 
+      <h2 className=' text-2xl md:text-3xl font-semibold  flex items-center 
+        justify-center mb-10'>
+        Frequently Asked Questions</h2>
      </div>
       </main>
     </div>
