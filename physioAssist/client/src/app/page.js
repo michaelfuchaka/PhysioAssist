@@ -98,7 +98,7 @@ export default function Home() {
      <div className='text-[#000000] py-24  '>
       <h2 className=' text-2xl md:text-3xl font-semibold  flex items-center 
         justify-center mb-10'>
-        Powerful Features For Modern Physiotherapy Practice</h2>
+        What Makes Us Different</h2>
 
       <div className="flex flex-col md:flex-row justify-between gap-8 px-6 md:px-12 
       items-center md:items-stretch">
@@ -158,44 +158,65 @@ export default function Home() {
         Frequently Asked Questions</h2>
          <div className='grid grid-cols-1 md:grid-cols-2 gap-8 px-6 md:px-12 max-w-6xl mx-auto'>
       {/* FAQ 1 */}
-       <div>
-      <h2 className='font-semibold text-lg mt-4'>
-        Q1 —   Is PhysioAssist a diagnostic tool?
+       <div className='flex gap-2'>
+      <h2 className='font-semibold text-lg mt-4 shrink-0'>
+        Q1 —   
         </h2>
+        <div>
+          <h3 className='font-semibold text-lg mt-4'>
+        Is PhysioAssist a diagnostic tool?
+        </h3>
       <p className='mt-2 leading-relaxed'>
-        No. PhysiAssist is a clinical decision support tool that assists physiotherapists with symptom analysis and treatment planning. It does not diagnose or replace professional clinical judgment
+        No. PhysiAssist is a clinical decision support <br />  tool that assists physiotherapists with symptom <br />analysis and treatment planning. It does not <br /> diagnose or replace professional clinical <br />judgment
         </p>
+        </div>
        </div>
 
        {/* FAQ 2 */}
-       <div>
-      <h2 className='font-semibold text-lg mt-4'>
-        Q2 —   How is patient data handled?
+       <div className='flex gap-2'>
+      <h2 className='font-semibold text-lg mt-4 shrink-0'>
+        Q2 — 
         </h2>
+        <div>
+          <h3 className='font-semibold text-lg mt-4'>
+        How is patient data handled?
+        </h3>
       <p className='mt-2 leading-relaxed'>
-          All patient data is stored anonymously with no personal identifiers. Our platform is GDPR-compliant and uses secure, encrypted storage to protect sensitive information
+       All patient data is stored anonymously  <br /> with no personal identifiers. Our  platform  <br /> is GDPR-compliant and uses secure, <br /> encrypted storage to protect sensitive  <br />information
         </p>
-       </div> 
+        </div>
+       </div>
 
        {/* FAQ 3 */}
-       <div>
-      <h2 className='font-semibold text-lg mt-4'>
-        Q3 —  What languages are currently supported?
+      <div className='flex gap-2'>
+      <h2 className='font-semibold text-lg mt-4 shrink-0'>
+        Q3 — 
         </h2>
+        <div>
+          <h3 className='font-semibold text-lg mt-4'>
+      What languages are currently supported?
+        </h3>
       <p className='mt-2 leading-relaxed'>
-        PhysiAssist currently supports English and German for full interface and report generation. Additional languages are in development and will be added based on user demand
+      PhysiAssist currently supports English and German  <br /> for full interface and report generation. Additional  <br /> languages are in development and will be added  <br />based on user demand
         </p>
-       </div> 
+        </div>
+       </div>
 
        {/* FAQ 4 */}
-       <div>
-      <h2 className='font-semibold text-lg mt-4'>
-        Q4 —   Do I need special training to use PhysioAssist?
+       <div className='flex gap-2'>
+      <h2 className='font-semibold text-lg mt-4 shrink-0'>
+        Q4 — 
         </h2>
+        <div>
+          <h3 className='font-semibold text-lg mt-4'>
+       Do I need special training to use  <br />PhysioAssist?
+        </h3>
       <p className='mt-2 leading-relaxed'>
-         No special training required. The interface is intuitive and designed specifically for busy clinical workflows. Most therapists can start using it effectively within minutes.
+     No special training required. The interface is  <br />intuitive and designed specifically for busy  <br /> clinical workflows. Most therapists can start  <br /> using it effectively within minutes.
         </p>
-       </div>  
+        </div>
+       </div>
+  
        </div>
      </div>
       </main>
