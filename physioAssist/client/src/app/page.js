@@ -95,7 +95,7 @@ export default function Home() {
       </div> 
             
      {/* features */}
-     <div className='text-[#000000] py-16  '>
+     <div className='text-[#000000] py-24  '>
       <h2 className=' text-2xl md:text-3xl font-semibold  flex items-center 
         justify-center mb-10'>
         Powerful Features For Modern Physiotherapy Practice</h2>
@@ -152,10 +152,51 @@ export default function Home() {
      </div>
 
      {/* FAQ */}
-     <div className='text-[#000000] py-16 bg-[#EFF6FF] '> 
+     <div className='text-[#000000] py-24 bg-[#EFF6FF] '> 
       <h2 className=' text-2xl md:text-3xl font-semibold  flex items-center 
         justify-center mb-10'>
         Frequently Asked Questions</h2>
+         <div className='grid grid-cols-1 md:grid-cols-2 gap-8 px-6 md:px-12 max-w-6xl mx-auto'>
+      {/* FAQ 1 */}
+       <div>
+      <h2 className='font-semibold text-lg mt-4'>
+        Q1 —   Is PhysioAssist a diagnostic tool?
+        </h2>
+      <p className='mt-2 leading-relaxed'>
+        No. PhysiAssist is a clinical decision support tool that assists physiotherapists with symptom analysis and treatment planning. It does not diagnose or replace professional clinical judgment
+        </p>
+       </div>
+
+       {/* FAQ 2 */}
+       <div>
+      <h2 className='font-semibold text-lg mt-4'>
+        Q2 —   How is patient data handled?
+        </h2>
+      <p className='mt-2 leading-relaxed'>
+          All patient data is stored anonymously with no personal identifiers. Our platform is GDPR-compliant and uses secure, encrypted storage to protect sensitive information
+        </p>
+       </div> 
+
+       {/* FAQ 3 */}
+       <div>
+      <h2 className='font-semibold text-lg mt-4'>
+        Q3 —  What languages are currently supported?
+        </h2>
+      <p className='mt-2 leading-relaxed'>
+        PhysiAssist currently supports English and German for full interface and report generation. Additional languages are in development and will be added based on user demand
+        </p>
+       </div> 
+
+       {/* FAQ 4 */}
+       <div>
+      <h2 className='font-semibold text-lg mt-4'>
+        Q4 —   Do I need special training to use PhysioAssist?
+        </h2>
+      <p className='mt-2 leading-relaxed'>
+         No special training required. The interface is intuitive and designed specifically for busy clinical workflows. Most therapists can start using it effectively within minutes.
+        </p>
+       </div>  
+       </div>
      </div>
       </main>
     </div>
