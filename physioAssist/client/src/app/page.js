@@ -1,11 +1,11 @@
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import React from 'react';
 import Image from 'next/image';
 import { FiClipboard } from 'react-icons/fi';
 import { FaBrain } from 'react-icons/fa';
 import { HiOutlineLightBulb } from 'react-icons/hi';
-import { MdOutlineAssignment, MdLanguage , 
- MdAssignmentAdd,MdOutlineSearch  } from 'react-icons/md';
+import { MdOutlineAssignment, MdLanguage ,  MdAssignmentAdd,MdOutlineSearch  } from 'react-icons/md';
 
 
 export default function Home() {
@@ -95,10 +95,17 @@ export default function Home() {
       </div> 
             
      {/* features */}
-     <div className='text-[#000000] py-24  '>
+     <div id="about" 
+      className='bg-[#F8FAFC]  text-[#000000] py-24  '>
       <h2 className=' text-2xl md:text-3xl font-semibold  flex items-center 
         justify-center mb-10'>
         What Makes Us Different</h2>
+
+      <p className="max-w-2xl mx-auto text-center text-lg  leading-relaxed mb-12">
+        A clinical decision support platform built to streamline physiotherapy
+      assessments, documentation, and treatment planning.
+      </p>
+
 
       <div className="flex flex-col md:flex-row justify-between gap-8 px-6 md:px-12 
       items-center md:items-stretch">
@@ -152,7 +159,7 @@ export default function Home() {
      </div>
 
      {/* FAQ */}
-     <div className='text-[#000000] py-24 bg-[#EFF6FF] '> 
+     <div id='faq' className='text-[#000000] py-24 bg-[#EFF6FF] '> 
       <h2 className=' text-2xl md:text-3xl font-semibold  flex items-center 
         justify-center mb-10'>
         Frequently Asked Questions</h2>
@@ -220,6 +227,8 @@ export default function Home() {
        </div>
      </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
