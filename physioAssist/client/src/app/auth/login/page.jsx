@@ -11,7 +11,7 @@ const Login = () => {
 
   return (
     <div className=' bg-[#F5F5F5] text-[#000000] min-h-screen'>
-    <div className='py-5 px-10 flex justify-between items-center'>
+    <div className='py-2 px-10 flex justify-between items-center'>
         <Link href="#" className='cursor-pointer' >
         <div className='shrink-0'>
                 {imageError ? (
@@ -34,17 +34,17 @@ const Login = () => {
     </div>
 
         <div className='flex-1 flex justify-center items-center p-5'>
-        <div className='bg-white p-10 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.2)] w-full max-w-[400px]'>
+        <div className='bg-white p-6 rounded-xl shadow-lg w-full max-w-[400px]'>
         {/* login form  */}
-        <h2 className='mb-2.5 text-[#333] text-[28px]'>
+        <h2 className='mb-2 text-[#333] text-xl font-semibold'>
             Welcome Back
              </h2>
-         <p className='text-[#666] text-sm mb-7.5'>
+         <p className='text-[#666] text-sm mb-4'>
             Please enter your details to sign in
             </p>
          <form >
             {/* email */}
-            <div className='mb-5'>
+            <div className='mb-4'>
                 <label className='block mb-2 text-[#333] text-sm font-medium'> Email</label>
                 <input 
                 type="email" 
@@ -56,7 +56,7 @@ const Login = () => {
                 />
             </div>
             {/* password */}
-            <div className='mb-5'>
+            <div className='mb-4'>
             <label className="block mb-2 text-[#333] text-sm font-medium">Password</label>
             <input
               type="password"
@@ -78,7 +78,7 @@ const Login = () => {
                 Sign In
             </button> 
 
-             <div className="text-center my-[25px] text-[#999] text-sm">
+             <div className="text-center my-4 text-[#999] text-sm">
                 or continue with
                 </div>
               <div  className="flex ">
