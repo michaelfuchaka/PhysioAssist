@@ -33,9 +33,9 @@ const [confirmPassword, setConfirmPassword] = useState('');
                     )}
             </div>
             </Link>
-            <Link href="#" className='text-s no-underline text-[#324B6F] hover:underline' >Already have an account? <strong>Sign In</strong></Link>
+            <Link href="/auth/login" className='text-s no-underline text-[#324B6F] hover:underline' >Already have an account? <strong>Sign In</strong></Link>
         </div>
-        <div className='flex-1 flex justify-center items-center p-5'>
+        <div className='flex-1 flex justify-center items-center p-5 pt-0'>
          <div className='bg-white p-6 rounded-xl shadow-lg w-full max-w-[400px]'>
            {/* signup form */}
           <h2 className='mb-2 text-[#333] text-xl font-semibold'>
@@ -101,14 +101,7 @@ const [confirmPassword, setConfirmPassword] = useState('');
               Sign Up
             </button>
           
-           <div className="text-center my-4 text-[#999] text-sm">
-              or continue with
-            </div>
-            <div className="flex">
-              <button type="button" className="flex-1 p-3 border-2 border-[#e0e0e0] bg-white rounded-lg cursor-pointer text-sm transition-colors duration-300 hover:border-[#324B6F] hover:bg-[#f8f9ff]">
-                Google
-              </button>
-            </div>
+    
           </form>
          </div>
         </div>

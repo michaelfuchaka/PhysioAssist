@@ -30,7 +30,7 @@ const Login = () => {
                 )}
         </div>
         </Link>
-        <Link href="#" className='text-s no-underline text-[#324B6F] hover:underline' >Don&apos;t have an account? <strong>Sign Up</strong></Link>
+        <Link href="/auth/signup" className='text-s no-underline text-[#324B6F] hover:underline' >Don&apos;t have an account? <strong>Sign Up</strong></Link>
     </div>
 
         <div className='flex-1 flex justify-center items-center p-5'>
@@ -78,15 +78,7 @@ const Login = () => {
                 Sign In
             </button> 
 
-             <div className="text-center my-4 text-[#999] text-sm">
-                or continue with
-                </div>
-              <div  className="flex ">
-             <button type="button" className="flex-1 p-3 border-2 border-[#e0e0e0] bg-white rounded-lg cursor-pointer text-sm transition-colors duration-300 hover:border-[#324B6F] hover:bg-[#f8f9ff]">
-                Google
-                </button>
-                   
-              </div>
+        
          </form>
          </div>
         </div> 
