@@ -14,13 +14,12 @@ def register():
 
     fullname = data.get('fullname')
     email = data.get('email')
-    gender = data.get('gender')
     password = data.get('password')
 
     if not fullname or not email or not password:
         return jsonify({'error':'All fields are required'}), 400
     
-
+    gender = data.get('gender', 'neutral')
     # check if email exists
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
@@ -31,7 +30,7 @@ def register():
     elif gender == 'female':
         avatar = '/avatars/female.png'
     else:
-        avatar = '/avatars/neutral.png'
+        avatar = None
     
      # create user
     user = User(fullname=fullname, email=email, gender=gender, avatar=avatar)

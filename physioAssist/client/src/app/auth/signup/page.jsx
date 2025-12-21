@@ -2,6 +2,7 @@
 import React , {  useState }  from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { login, register, logout } from '@/lib/api';
   
 
 const SignUp = () => {
