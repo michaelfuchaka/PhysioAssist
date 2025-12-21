@@ -2,12 +2,16 @@
 import React , { useEffect, useState }  from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getCurrentUser, logout } from '@/lib/api';
+import { useRouter } from 'next/navigation';
 
 
 const Navbar = () => {
     const [imageError, setImageError] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-   
+    const [user, setUser] = useState(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const router = useRouter();
 
     // Prevent body scroll when menu is open
     useEffect ( () => {
@@ -20,10 +24,40 @@ const Navbar = () => {
             document.body.style.overflow = 'unset';
         };
      }, [isMenuOpen]);
+
+    useEffect(() => {
+    const fetchUser = async () => {
+        try {
+            const userData = await getCurrentUser();
+            setUser(userData);
+        } catch (error) {
+            setUser(null);
+        }
+    };
+    fetchUser();
+   }, []); 
      
      
     const closeMenu = () => setIsMenuOpen(false); 
 
+  const handleLogout = async () => {
+    try {
+        await logout();
+        setUser(null);
+        router.push('/auth/login');
+    } catch (error) {
+        console.error('Logout failed:', error);
+    }
+   };
+
+  const getInitials = (name) => {
+    if (!name) return '?';
+    const parts = name.split(' ');
+    if (parts.length >= 2) {
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+ };
 
   return (
     <div className='fixed top-0 left-0 w-full z-50'>
@@ -68,14 +102,7 @@ const Navbar = () => {
     </div>
 
      {/* Desktop Login Button */}
-    <div className=" hidden md:block  shrink-0">
-    <button className='text-[#324B6F] text-xl font-semibold border-2 border-[#324B6F] 
-    rounded-lg px-4 py-1 hover:bg-[#324B6F] hover:text-white transition-all
-     duration-300 hover:scale-105'>
-        Login
-    </button>
-    </div>
-
+    
     {/* Mobile: Login + Hamburger */}
     <div className="flex md:hidden items-center gap-4">
         <button className='text-[#324B6F] text-base font-semibold border-2 border-[#324B6F] rounded-lg px-3 py-1 hover:bg-[#324B6F] hover:text-white transition-all duration-300'>
