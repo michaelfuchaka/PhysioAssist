@@ -2,14 +2,31 @@
 import React , {  useState }  from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { login, register, logout } from '@/lib/api';
+import { login } from '@/lib/api';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
- const [imageError, setImageError] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
+    try {
+        await login(email, password);
+        router.push('/dashboard'); // Redirect on success
+    } catch (err) {
+        setError(err.message || 'Login failed. Please try again.');
+    } finally {
+        setLoading(false);
+    }
+};
   return (
     <div className=' bg-[#F5F5F5] text-[#000000] min-h-screen'>
     <div className='py-2 px-10 flex justify-between items-center'>
@@ -43,7 +60,13 @@ const Login = () => {
          <p className='text-[#666] text-sm mb-4'>
             Please enter your details to sign in
             </p>
-         <form >
+         <form  onSubmit={handleSubmit}>
+          {error && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
+                    {error}
+                </div>
+            )}
+
             {/* email */}
             <div className='mb-4'>
                 <label className='block mb-2 text-[#333] text-sm font-medium'> Email</label>
@@ -75,11 +98,13 @@ const Login = () => {
                     </a>
               </div>
 
-             <button type="submit" className="w-full p-3.5  bg-[#324B6F] text-white border-none rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 hover:-translate-y-0.5 ">
-                Sign In
-            </button> 
-
-        
+             <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full p-3.5 bg-[#324B6F] text-white border-none rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                {loading ? 'Signing in...' : 'Sign In'}
+            </button>
          </form>
          </div>
         </div> 

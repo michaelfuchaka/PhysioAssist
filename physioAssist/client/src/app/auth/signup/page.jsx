@@ -2,16 +2,46 @@
 import React , {  useState }  from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { login, register, logout } from '@/lib/api';
+import { register } from '@/lib/api';
+import { useRouter } from 'next/navigation';
   
 
 const SignUp = () => {
 const [imageError, setImageError] = useState(false);
-const [fullName, setFullName] = useState('');
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
-const [confirmPassword, setConfirmPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    // Frontend validation
+    if (password !== confirmPassword) {
+        setError('Passwords do not match');
+        return;
+    }
+
+    if (password.length < 6) {
+        setError('Password must be at least 6 characters');
+        return;
+    }
+
+    setLoading(true);
+
+    try {
+        await register(fullName, email, password);
+        router.push('/dashboard'); 
+    } catch (err) {
+        setError(err.message || 'Registration failed. Please try again.');
+    } finally {
+        setLoading(false);
+    }
+};
 
   return (
     <div  className=' bg-[#F5F5F5] text-[#000000] min-h-screen'>
@@ -46,7 +76,12 @@ const [confirmPassword, setConfirmPassword] = useState('');
             Please enter your details to sign up
           </p>
 
-          <form >
+          <form onSubmit={handleSubmit}>
+            {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
+              {error}
+          </div>
+          )}
             {/* full name */}
             <div className='mb-4'>
               <label className='block mb-2 text-[#333] text-sm font-medium'>Full Name</label>
@@ -98,9 +133,13 @@ const [confirmPassword, setConfirmPassword] = useState('');
               />
             </div>
 
-            <button type="submit" className="w-full p-3.5 bg-[#324B6F] text-white border-none rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 hover:-translate-y-0.5 mb-4">
-              Sign Up
-            </button>
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="w-full p-3.5 bg-[#324B6F] text-white border-none rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+          >
+              {loading ? 'Creating account...' : 'Sign Up'}
+          </button>
           
     
           </form>

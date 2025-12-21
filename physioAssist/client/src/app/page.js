@@ -6,7 +6,7 @@ import { FiClipboard } from 'react-icons/fi';
 import { FaBrain } from 'react-icons/fa';
 import { HiOutlineLightBulb } from 'react-icons/hi';
 import { MdOutlineAssignment, MdLanguage ,  MdAssignmentAdd,MdOutlineSearch  } from 'react-icons/md';
-
+import { getCurrentUser } from '@/lib/api';
 
 export default function Home() {
      
