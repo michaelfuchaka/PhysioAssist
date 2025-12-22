@@ -3,11 +3,16 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/api';
+import { usePathname } from 'next/navigation';
+import { logout } from '@/lib/api';
+import { useRouter } from 'next/navigation';
 
 const Sidebar = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
+    const pathname = usePathname();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -24,8 +29,18 @@ const Sidebar = () => {
         fetchUser();
     }, []);
 
+    const handleLogout = async () => {
+    try {
+        await logout();
+        setUser(null);
+        router.push('/auth/login');
+    } catch (error) {
+        console.error('Logout failed:', error);
+    }
+   };
+
     return (
-        <aside className="fixed top-0 left-0 h-full w-60 p-4 text-black bg-[#FFFFFF] border-r border-gray-200">
+    <aside className="fixed top-0 left-0 h-full w-60 p-4 text-black bg-[#FFFFFF] border-r border-gray-200 flex flex-col">
             {/* Logo Section */}
             <div className='mb-6'>
                 {imageError ? (
@@ -54,7 +69,7 @@ const Sidebar = () => {
                     </div>
                 </div>
             ) : user ? (
-                <div className="mb-6 flex items-center gap-3 pb-4 border-b border-gray-200">
+               <div className="mb-6 flex flex-col items-center gap-2 pb-4 border-b border-gray-200">
                     {/* User Avatar */}
                     <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
                         {user.avatar ? (
@@ -72,7 +87,7 @@ const Sidebar = () => {
                         )}
                     </div>
                     {/* User Info */}
-                    <div className="flex-1 overflow-hidden">
+                    <div className="text-center">
                         <p className="font-semibold text-sm text-gray-900 truncate">
                             {user.name || 'User'}
                         </p>
@@ -81,30 +96,31 @@ const Sidebar = () => {
                 </div>
             ) : null}
             {/* Navigation */}
-            <nav className="mt-24">
+            <nav className="mt-6">
                 <ul className="space-y-2">
                     <li>
-                        <Link href="/" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                        <Link href="/"className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${pathname === '/' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>
                             Home
                         </Link>
                     </li>
                     <li>
-                        <Link href="/dashboard" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                        <Link href="/dashboard" className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${pathname === '/dashboard' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>
                             Dashboard
                         </Link>
                     </li>
                     <li>
-                        <Link href="/new-case" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                        <Link href="/new-case"  className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${pathname === '/new-case' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>
+
                             New Case
                         </Link>
                     </li>
                     <li>
-                        <Link href="/case-history" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                        <Link href="/case-history" className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${pathname === '/case-history' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>
                             Case History
                         </Link>
                     </li>
                     <li>
-                        <Link href="/settings" className="block px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                        <Link href="/settings" className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${pathname === '/settings' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>
                             Settings
                         </Link>
                     </li>
@@ -113,13 +129,16 @@ const Sidebar = () => {
             
 
             {/* Language Toggle & Log Out at Bottom */}
-            <div className="absolute bottom-4 left-4 right-4 space-y-2 border-t border-gray-200 pt-4">
+          <div className="mt-auto space-y-2 border-t border-gray-200 pt-4">
                 <div className="flex items-center justify-between px-4 py-2">
                     <span className="text-sm text-gray-600">EN | DE</span>
                 </div>
-                <button className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                    Log Out
-                </button>
+         <button 
+            onClick={handleLogout}
+            className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+        >
+            Log Out
+        </button>
             </div>
         </aside>
     );

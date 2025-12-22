@@ -153,22 +153,8 @@ const Navbar = () => {
         </Link>
     )}
    </div>
-    {/* Mobile: Login + Hamburger */}
-    <div className="flex md:hidden items-center gap-4">
-        {user ? (
-        <button 
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="w-10 h-10 rounded-full bg-[#324B6F] text-white flex items-center justify-center font-semibold text-sm"
-        >
-            {getInitials(user.name)}
-        </button>
-    ) : (
-        <Link href="/auth/login">
-            <button className='text-[#324B6F] text-base font-semibold border-2 border-[#324B6F] rounded-lg px-3 py-1 hover:bg-[#324B6F] hover:text-white transition-all duration-300'>
-                Login
-            </button>
-        </Link>
-    )}
+    {/* Mobile: Hamburger */}
+    <div className="flex md:hidden">
         {/* Hamburger Button */}
         <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -246,6 +232,16 @@ const Navbar = () => {
             >
                 How it works
             </Link>
+            {!user && (
+            <Link 
+                href="/auth/login" 
+                onClick={closeMenu}
+                className='text-[#324B6F] text-xl py-4 border-b border-gray-200 
+                hover:text-[#3D7AC4] hover:pl-2 transition-all duration-200'
+            >
+                Login
+            </Link>
+            )}
         </div>
         </div>
     </>
