@@ -3,7 +3,7 @@ from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 import os
 from flask_cors import CORS
-
+from datetime import timedelta
 from extensions import db, bcrypt   
 
 load_dotenv()
@@ -26,10 +26,10 @@ def create_app():
     app.config['JWT_TOKEN_LOCATION'] = ['headers', 'cookies'] 
     app.config["JWT_ACCESS_COOKIE_NAME"] = "access_token" 
     app.config['JWT_COOKIE_CSRF_PROTECT'] = False   #eneble CSRF protection in production
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False  
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=90)  
 
     app.config['JWT_COOKIE_SECURE'] = False
-    app.config['JWT_COOKIE_SAMESITE'] = 'Lax'
+    app.config['JWT_COOKIE_SAMESITE'] = None
     app.config['JWT_COOKIE_HTTPONLY'] = True
 
 

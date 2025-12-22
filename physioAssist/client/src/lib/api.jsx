@@ -1,12 +1,15 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export async function getCurrentUser(){
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+        return null;
+    }
     const response = await fetch(`${API_BASE_URL}/api/auth/me`,{
         method: 'GET',
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
-
+            'Authorization': `Bearer ${token}`,
         },
     });
     
@@ -23,7 +26,6 @@ export async function getCurrentUser(){
  export async function login(email, password){
     const response = await fetch(`${API_BASE_URL}/api/auth/login`,{
         method: 'POST',
-        credentials: 'include',
         headers:{
               'Content-Type': 'application/json',
         },
@@ -36,6 +38,7 @@ export async function getCurrentUser(){
         throw new Error(error.error || 'Login failed');
     }
     const data = await response.json();
+    localStorage.setItem('access_token', data.token);
     return data;
     }
 
@@ -43,7 +46,6 @@ export async function getCurrentUser(){
 export async function register (fullname, email, password, gender=null){
     const response =  await fetch(`${API_BASE_URL}/api/auth/register`,{
         method: 'POST',
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -55,19 +57,22 @@ export async function register (fullname, email, password, gender=null){
     }
 
     const data = await response.json();
+    localStorage.setItem('access_token', data.token);
     return data;
 }
 
 // logout
 export async function logout() {
+    const token = localStorage.getItem('access_token');
     const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
         method: 'POST',
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': token ? `Bearer ${token}` : '',
         },
     });
 
+    localStorage.removeItem('access_token');
     if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'Logout failed');

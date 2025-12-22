@@ -100,8 +100,7 @@ def login():
             'avatar': user.avatar,
             'language_preference': user.language_preference
         }
-    })
-     ,200  )  
+    }), 200)  
 
      # Set token in httpOnly cookie not accessible via JS
 #     response.set_cookie(
