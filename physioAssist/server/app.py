@@ -2,6 +2,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager  
 from dotenv import load_dotenv
 import os
+from flask_cors import CORS
 
 from extensions import db, bcrypt   
 
@@ -9,6 +10,12 @@ load_dotenv()
 
 def create_app():
     app = Flask(__name__)
+    
+    CORS(app, 
+     origins=['http://localhost:3000'],
+     supports_credentials=True,
+     allow_headers=['Content-Type', 'Authorization'],
+     expose_headers=['Set-Cookie'])
 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -20,6 +27,10 @@ def create_app():
     app.config["JWT_ACCESS_COOKIE_NAME"] = "access_token" 
     app.config['JWT_COOKIE_CSRF_PROTECT'] = False   #eneble CSRF protection in production
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False  
+
+    app.config['JWT_COOKIE_SECURE'] = False
+    app.config['JWT_COOKIE_SAMESITE'] = 'Lax'
+    app.config['JWT_COOKIE_HTTPONLY'] = True
 
 
     # Initialize extensions

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify,  make_response
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, set_access_cookies
 
 from datetime import timedelta
 from extensions import db
@@ -39,15 +39,28 @@ def register():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({
+    access_token = create_access_token(
+        identity=user.id,
+        expires_delta=timedelta(days=90)
+    )
+
+   # Create response with token
+    response = make_response(jsonify({
         'message': 'User registered successfully',
+        'token': access_token,
         'user':{
-            'id':user.id,
-            'name':user.fullname,
-            'email':user.email,
+            'id': user.id,
+            'name': user.fullname,
+            'email': user.email,
             'avatar': user.avatar
         }
-    }), 201
+    }), 201)
+
+    # Set token in cookie
+    set_access_cookies(response, access_token)
+
+    return response
+
 
 
 # Login route
@@ -91,15 +104,16 @@ def login():
      ,200  )  
 
      # Set token in httpOnly cookie not accessible via JS
-    response.set_cookie(
-        "access_token",
-        value=access_token,
-        httponly=True,
-        secure=False,
-        samesite='Lax',
-        max_age=7776000
-)
-
+#     response.set_cookie(
+#         "access_token",
+#         value=access_token,
+#         httponly=True,
+#         secure=False,
+#         samesite='Lax',
+#         max_age=7776000,
+#         path='/' 
+# )
+    set_access_cookies(response, access_token)
     return response
 
 

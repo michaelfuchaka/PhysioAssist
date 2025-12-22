@@ -14,7 +14,7 @@ class User(db.Model):
     avatar = Column(String(255), nullable=True)
     language_preference = Column(String(2), default='EN')
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     # Relationships
     drafts = relationship("Draft", back_populates="user", cascade="all, delete")

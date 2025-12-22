@@ -102,13 +102,73 @@ const Navbar = () => {
     </div>
 
      {/* Desktop Login Button */}
-    
-    {/* Mobile: Login + Hamburger */}
-    <div className="flex md:hidden items-center gap-4">
-        <button className='text-[#324B6F] text-base font-semibold border-2 border-[#324B6F] rounded-lg px-3 py-1 hover:bg-[#324B6F] hover:text-white transition-all duration-300'>
-            Login
+     <div className="hidden md:flex">
+    {user ? (
+    <div className="relative">
+        <button 
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+        >
+            <div className="w-10 h-10 rounded-full bg-[#324B6F] text-white flex items-center justify-center font-semibold text-sm">
+                {getInitials(user.name)}
+            </div>
         </button>
         
+        {isDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+                <div className="px-4 py-2 border-b border-gray-200">
+                    <p className="font-semibold text-sm text-[#324B6F]">{user.name}</p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                </div>
+                <Link 
+                    href="/dashboard" 
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="block px-4 py-2 text-sm text-[#324B6F] hover:bg-gray-50"
+                >
+                    Dashboard
+                </Link>
+                <Link 
+                    href="/settings" 
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="block px-4 py-2 text-sm text-[#324B6F] hover:bg-gray-50"
+                >
+                    Settings
+                </Link>
+                <button 
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50"
+                >
+                    Logout
+                </button>
+            </div>
+        )}
+        </div>
+    ) : (
+        <Link href="/auth/login">
+            <button className='text-[#324B6F] text-xl font-semibold border-2 border-[#324B6F] 
+            rounded-lg px-4 py-1 hover:bg-[#324B6F] hover:text-white transition-all
+            duration-300 hover:scale-105'>
+                Login
+            </button>
+        </Link>
+    )}
+   </div>
+    {/* Mobile: Login + Hamburger */}
+    <div className="flex md:hidden items-center gap-4">
+        {user ? (
+        <button 
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="w-10 h-10 rounded-full bg-[#324B6F] text-white flex items-center justify-center font-semibold text-sm"
+        >
+            {getInitials(user.name)}
+        </button>
+    ) : (
+        <Link href="/auth/login">
+            <button className='text-[#324B6F] text-base font-semibold border-2 border-[#324B6F] rounded-lg px-3 py-1 hover:bg-[#324B6F] hover:text-white transition-all duration-300'>
+                Login
+            </button>
+        </Link>
+    )}
         {/* Hamburger Button */}
         <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -138,6 +198,37 @@ const Navbar = () => {
         <div className='md:hidden fixed top-16 right-0 h-[calc(100%-4rem)] w-64 bg-white shadow-2xl z-50 '
          style={{ animation: 'slideIn 0.3s ease-out' }}>
         <div className='flex flex-col p-8 pt-8'>
+            {user && (
+            <>
+                <div className='px-4 py-3 border-b border-gray-200'>
+                    <p className="font-semibold text-sm text-[#324B6F]">{user.name}</p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                </div>
+                <Link 
+                    href="/dashboard"
+                    onClick={closeMenu}
+                    className='text-[#324B6F] text-xl py-4 border-b border-gray-200
+                        hover:text-[#3D7AC4] hover:pl-2 transition-all duration-200'
+                >
+                    Dashboard
+                </Link>
+                <Link 
+                    href="/settings"
+                    onClick={closeMenu}
+                    className='text-[#324B6F] text-xl py-4 border-b border-gray-200
+                        hover:text-[#3D7AC4] hover:pl-2 transition-all duration-200'
+                >
+                    Settings
+                </Link>
+                <button 
+                    onClick={() => { handleLogout(); closeMenu(); }}
+                    className='w-full text-left text-red-600 text-xl py-4 border-b border-gray-200
+                        hover:pl-2 transition-all duration-200'
+                >
+                    Logout
+                </button>
+            </>
+        )}
             <Link 
                 href="/"
                 onClick={closeMenu}
