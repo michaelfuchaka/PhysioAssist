@@ -109,13 +109,13 @@ const Sidebar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/new-case"  className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${pathname === '/new-case' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>
+                        <Link href="/newcase"  className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${pathname === '/newcase' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>
 
                             New Case
                         </Link>
                     </li>
                     <li>
-                        <Link href="/case-history" className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${pathname === '/case-history' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>
+                        <Link href="/casehistory" className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${pathname === '/casehistory' ? 'bg-blue-100 text-blue-600 font-medium' : 'hover:bg-gray-100'}`}>
                             Case History
                         </Link>
                     </li>

@@ -1,13 +1,13 @@
 import React from 'react'
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/Sidebar"; 
+
 
 const NewCase = () => {
   return (
-    <div>
-
-        <Sidebar />
-    </div>
+    <div> 
+      <Sidebar />
+       </div>
   )
 }
 
-export default NewCase
+export default NewCase;
