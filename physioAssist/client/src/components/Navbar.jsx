@@ -11,6 +11,7 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [user, setUser] = useState(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isAccountOpen, setIsAccountOpen] = useState(false);
     const router = useRouter();
 
     // Prevent body scroll when menu is open
@@ -186,35 +187,40 @@ const Navbar = () => {
         <div className='flex flex-col p-8 pt-8'>
             {user && (
             <>
-                <div className='px-4 py-3 border-b border-gray-200'>
-                    <p className="font-semibold text-sm text-[#324B6F]">{user.name}</p>
-                    <p className="text-xs text-gray-500">{user.email}</p>
-                </div>
-                <Link 
-                    href="/dashboard"
-                    onClick={closeMenu}
-                    className='text-[#324B6F] text-xl py-4 border-b border-gray-200
-                        hover:text-[#3D7AC4] hover:pl-2 transition-all duration-200'
-                >
-                    Dashboard
-                </Link>
-                <Link 
-                    href="/settings"
-                    onClick={closeMenu}
-                    className='text-[#324B6F] text-xl py-4 border-b border-gray-200
-                        hover:text-[#3D7AC4] hover:pl-2 transition-all duration-200'
-                >
-                    Settings
-                </Link>
                 <button 
-                    onClick={() => { handleLogout(); closeMenu(); }}
-                    className='w-full text-left text-red-600 text-xl py-4 border-b border-gray-200
-                        hover:pl-2 transition-all duration-200'
+                    onClick={() => setIsAccountOpen(!isAccountOpen)}
+                    className='text-[#324B6F] text-xl py-4 border-b border-gray-200
+                        hover:text-[#3D7AC4] hover:pl-2 transition-all duration-200 text-left flex items-center justify-between'
                 >
-                    Logout
+                    Account
+                    <span className={`transition-transform duration-200 ${isAccountOpen ? 'rotate-180' : ''}`}>▼</span>
                 </button>
+                {isAccountOpen && (
+                <>
+                    <div className='px-4 py-3 border-b border-gray-200 ml-4'>
+                        <p className="font-semibold text-sm text-[#324B6F]">{user.name}</p>
+                        <p className="text-xs text-gray-500">{user.email}</p>
+                    </div>
+                    <Link 
+                        href="/dashboard"
+                        onClick={closeMenu}
+                        className='text-[#324B6F] text-xl py-4 border-b border-gray-200 ml-4
+                            hover:text-[#3D7AC4] hover:pl-2 transition-all duration-200'
+                    >
+                        Dashboard
+                    </Link>
+                    <Link 
+                        href="/settings"
+                        onClick={closeMenu}
+                        className='text-[#324B6F] text-xl py-4 border-b border-gray-200 ml-4
+                            hover:text-[#3D7AC4] hover:pl-2 transition-all duration-200'
+                    >
+                        Settings
+                    </Link>
+                </>
+                )}
             </>
-        )}
+            )}
             <Link 
                 href="/"
                 onClick={closeMenu}
@@ -232,6 +238,15 @@ const Navbar = () => {
             >
                 How it works
             </Link>
+            {user && (
+            <button 
+                onClick={() => { handleLogout(); closeMenu(); }}
+                className='w-full text-left text-red-600 text-xl py-4 border-b border-gray-200
+                    transition-all duration-200'
+            >
+                Logout
+            </button>
+            )}
             {!user && (
             <Link 
                 href="/auth/login" 
