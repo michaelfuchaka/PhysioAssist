@@ -81,3 +81,15 @@ export async function logout() {
     const data = await response.json();
     return data;
 }
+
+// Get user cases stats
+export async function getUserStats() {
+    const token = localStorage.getItem('access_token');
+    const response = await fetch(`${API_BASE_URL}/api/cases/stats`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    if (!response.ok) throw new Error('Failed to fetch stats');
+    return response.json();
+}

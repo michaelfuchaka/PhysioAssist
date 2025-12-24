@@ -42,7 +42,7 @@ const Sidebar = () => {
     return (
     <aside className="fixed top-0 left-0 h-full w-60 p-4 text-black bg-[#FFFFFF] border-r border-gray-200 flex flex-col">
             {/* Logo Section */}
-            <div className='mb-6'>
+            <div className='mb-0'>
                 {imageError ? (
                     <span style={{ color: '#324B6F', fontWeight: 'bold', fontSize: '16px' }}>
                         PhysioAssist
@@ -62,26 +62,26 @@ const Sidebar = () => {
             {/* User Profile Section */}
             {loading ? (
                 <div className="mb-6 flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-gray-200 animate-pulse"></div>
+                    <div className="w-24 h-24 rounded-full bg-gray-200 animate-pulse"></div>
                     <div className="flex-1">
                         <div className="h-4 bg-gray-200 rounded animate-pulse mb-2"></div>
                         <div className="h-3 bg-gray-200 rounded animate-pulse w-2/3"></div>
                     </div>
                 </div>
             ) : user ? (
-               <div className="mb-6 flex flex-col items-center gap-2 pb-4 border-b border-gray-200">
+               <div className="flex flex-col items-center gap-2 pb-4 border-b border-gray-200">
                     {/* User Avatar */}
-                    <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
+                    <div className="w-20 h-20 rounded-full flex items-center justify-center overflow-hidden">
                         {user.avatar ? (
                             <Image
                                 src={user.avatar}
                                 alt={user.name || 'User'}
-                                width={48}
-                                height={48}
+                                width={100}
+                                height={100}
                                 className="rounded-full"
                             />
                         ) : (
-                            <span className="text-lg font-semibold text-gray-600">
+                            <span className="text-xl font-semibold text-gray-600">
                                 {user.name?.charAt(0).toUpperCase() || 'U'}
                             </span>
                         )}
