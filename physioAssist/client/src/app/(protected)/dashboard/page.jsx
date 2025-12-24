@@ -55,26 +55,27 @@ const Dashboard = () => {
        </div>
     
     {/* Cases Cards */}
-       <div className='mt-6 grid grid-cols-1 md:grid-cols-3 gap-6'>
+       <div className='mt-6 pl-4 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl'>
         {/* Total Cases */}
-        <div className='bg-white p-6 rounded-[20px] shadow-md'>
-         <h3 className='text-lg font-semibold text-[#324B6F]'>Total Cases Analyzed</h3>
-         <p className='text-3xl font-bold text-[#3D7AC4] mt-2'>{stats.total_cases}</p>
+        <div className='bg-white p-4 rounded-[20px]  flex flex-col items-center justify-center text-center'>
+          <p className='text-2xl font-bold text-[#324B6F]'>{stats.total_cases}</p>
+         <h3 className='text-base text-[#000000] mt-2'>Total Cases Analyzed</h3>
         </div>
 
         {/* Cases This Week */}
-        <div className='bg-white p-6 rounded-[20px] shadow-md'>
-         <h3 className='text-lg font-semibold text-[#324B6F]'>Cases This Week</h3>
-         <p className='text-3xl font-bold text-[#3D7AC4] mt-2'>{stats.cases_this_week}</p>
+        <div className='bg-white p-4 rounded-[20px]  flex flex-col items-center justify-center text-center'>
+         <p className='text-2xl font-bold text-[#324B6F]'>{stats.cases_this_week}</p>
+         <h3 className='text-base text-[#000000] mt-2'>Cases This Week</h3>
         </div>
 
         {/* Active Drafts */}
-        <div className='bg-white p-6 rounded-[20px] shadow-md'>
-         <h3 className='text-lg font-semibold text-[#324B6F]'>Active Drafts</h3>
-         <p className='text-3xl font-bold text-[#3D7AC4] mt-2'>{stats.active_drafts}</p>
+        <div className='bg-white p-4 rounded-[20px]  flex flex-col items-center justify-center text-center'>
+         <p className='text-2xl font-bold text-[#324B6F]'>{stats.active_drafts}</p>
+         <h3 className='text-base  text-[#000000] mt-2'>Active Drafts</h3>
         </div>
 
        </div>
+
        </div>
       </main>
     </div>
