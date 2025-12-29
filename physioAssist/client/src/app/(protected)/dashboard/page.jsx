@@ -58,20 +58,23 @@ const Dashboard = () => {
        <div className='mt-6 pl-4 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl'>
         {/* Total Cases */}
         <div className='bg-white p-4 rounded-[20px]  flex flex-col items-center justify-center text-center'>
-          <p className='text-2xl font-bold text-[#324B6F]'>{stats.total_cases}</p>
+        
          <h3 className='text-base text-[#000000] mt-2'>Total Cases Analyzed</h3>
+           <p className='text-2xl font-bold text-[#324B6F]'>{stats.total_cases}</p>
         </div>
 
         {/* Cases This Week */}
         <div className='bg-white p-4 rounded-[20px]  flex flex-col items-center justify-center text-center'>
-         <p className='text-2xl font-bold text-[#324B6F]'>{stats.cases_this_week}</p>
+       
          <h3 className='text-base text-[#000000] mt-2'>Cases This Week</h3>
+           <p className='text-2xl font-bold text-[#324B6F]'>{stats.cases_this_week}</p>
         </div>
 
         {/* Active Drafts */}
         <div className='bg-white p-4 rounded-[20px]  flex flex-col items-center justify-center text-center'>
-         <p className='text-2xl font-bold text-[#324B6F]'>{stats.active_drafts}</p>
+       
          <h3 className='text-base  text-[#000000] mt-2'>Active Drafts</h3>
+           <p className='text-2xl font-bold text-[#324B6F]'>{stats.active_drafts}</p>
         </div>
 
        </div>
