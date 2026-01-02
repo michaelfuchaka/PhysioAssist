@@ -1,10 +1,50 @@
+'use client';
 import React from 'react'
 import Sidebar from "@/components/Sidebar"; 
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from "react";
 
 
 const NewCase = () => {
+  const [values, setValues] = useState({
+    painRegion: "",
+    symptoms: "",
+    duration: "",
+    aggravating: "",
+    additional: ""
+  });
+
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
+  const validate = (fieldValues = values) =>{
+    const newErrors = {};
+
+    if (!fieldValues.painRegion.trim()) {
+    newErrors.painRegion = "Pain region is required";
+  }
+   if (!fieldValues.symptoms.trim()) {
+    newErrors.symptoms = "Symptoms are required";
+  }
+
+  if (!fieldValues.duration.trim()) {
+    newErrors.duration = "Duration is required";
+  }
+
+  return newErrors;
+
+  };
+
+  const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  setValues(prev => ({
+    ...prev,
+    [name]: value
+  }));
+};
+
   return (
     <div> 
       <Sidebar />
@@ -18,7 +58,7 @@ const NewCase = () => {
         </div>
         </nav>
         {/* Page Header */}
-        <div className='mt-12 bg-white shadow-sm max-w-lg mx-auto p-6 rounded-xl'> 
+        <div className='mt-8 bg-white shadow-sm max-w-lg mx-auto p-6 rounded-xl'> 
           <h2 className='text-xl font-bold mb-4 text-center'>
             New Patients Symptom Analysis
           </h2>

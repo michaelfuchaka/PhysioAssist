@@ -23,7 +23,7 @@ const results = () => {
                 Possible Conditions
             </h2>
 
-             <button className="flex-1 bg-[#E0E0E0] font-medium py-3 rounded-lg hover:bg-[#D0D0D0] transition-colors">
+           <button className="flex-1 bg-[#E0E0E0] font-medium py-4 rounded-lg hover:bg-[#D0D0D0] transition-colors">
           Reject All & Re-analyze
           </button>
         </div>
