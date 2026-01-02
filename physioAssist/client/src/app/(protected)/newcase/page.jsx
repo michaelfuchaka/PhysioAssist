@@ -45,6 +45,18 @@ const NewCase = () => {
   }));
 };
 
+const handleBlur = (e) => {
+  if (!submitted) return;
+
+  const { name } = e.target;
+  const fieldErrors = validate({ [name]: values[name] });
+
+  setErrors(prev => ({
+    ...prev,
+    ...fieldErrors
+  }));
+};
+
   return (
     <div> 
       <Sidebar />
@@ -63,8 +75,28 @@ const NewCase = () => {
             New Patients Symptom Analysis
           </h2>
               {/* Form Inputs */}
-          <form className='space-y-4'>
-            <input type="text" placeholder="Pain Region" required className=' w-full px-4 py-3  bg-[#F5F5F5]
+          <form className='space-y-4'
+           onSubmit={(e) => {
+          e.preventDefault();
+          setSubmitted(true);
+
+          const validationErrors = validate();
+          setErrors(validationErrors);
+
+          if (Object.keys(validationErrors).length === 0) {
+            console.log("Form is valid, proceed");
+          }
+        }}
+          >
+            <input 
+            type="text" 
+            name="painRegion"
+            placeholder="Pain Region" 
+            value={values.painRegion}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            required 
+            className=' w-full px-4 py-3  bg-[#F5F5F5]
              rounded-xl  border border-[#324B6F] focus:outline-none  focus:border-[#324B6F]' />
           <input type="text" placeholder="Symptoms" required className=' w-full px-4 py-3  bg-[#F5F5F5]
              rounded-xl  border border-[#324B6F] focus:outline-none  focus:border-[#324B6F]' />
