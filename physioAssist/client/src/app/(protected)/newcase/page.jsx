@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Sidebar from "@/components/Sidebar";
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight,  Check } from 'lucide-react';
 import Link from 'next/link';
 
 const NewCase = () => {
@@ -38,9 +38,9 @@ const NewCase = () => {
   };
 
   const handleBlur = (e) => {
-    if (!submitted) return;
     const { name } = e.target;
-    setErrors(prev => ({ ...prev, ...validate({ [name]: values[name] }) }));
+    const fieldError = validate({ ...values, [name]: values[name] });
+    setErrors(prev => ({ ...prev, [name]: fieldError[name] }));
   };
 
   const formIsValid =
@@ -89,6 +89,7 @@ const NewCase = () => {
                 }
               }}
             >
+              
               {/* Pain Region */}
               <input
                 type="text"
