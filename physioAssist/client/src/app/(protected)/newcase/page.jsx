@@ -41,10 +41,21 @@ const NewCase = () => {
   };
 
   const handleBlur = (e) => {
-    const { name } = e.target;
-    const fieldError = validate({ ...values, [name]: values[name] });
+  const { name } = e.target;
+  const fieldError = validate({ ...values, [name]: values[name] });
+  
+  
+  if (fieldError[name]) {
     setErrors(prev => ({ ...prev, [name]: fieldError[name] }));
-  };
+  } else {
+ 
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[name];
+      return newErrors;
+    });
+  }
+};
 //  Check if form is valid
   const formIsValid =
     values.painRegion.trim() &&
@@ -106,6 +117,7 @@ const NewCase = () => {
             >
               
               {/* Pain Region */}
+              <div className="relative">
               <input
                 type="text"
                 name="painRegion"
@@ -115,6 +127,10 @@ const NewCase = () => {
                 onBlur={handleBlur}
                 className={inputClass("painRegion")}
               />
+              {submitted && values.painRegion.trim() && !errors.painRegion && (
+              <Check className="absolute right-3 top-3.5 text-green-500" size={20} />
+            )}
+              </div>
               {errors.painRegion && (
                 <p role="alert" className="text-sm text-red-600">
                   {errors.painRegion}
@@ -122,6 +138,7 @@ const NewCase = () => {
               )}
 
               {/* Symptoms */}
+              <div className="relative">
               <input
                 type="text"
                 name="symptoms"
@@ -131,6 +148,10 @@ const NewCase = () => {
                 onBlur={handleBlur}
                 className={inputClass("symptoms")}
               />
+              {submitted && values.symptoms.trim() && !errors.symptoms && (
+              <Check className="absolute right-3 top-3.5 text-green-500" size={20} />
+            )}
+              </div>
               {errors.symptoms && (
                 <p role="alert" className="text-sm text-red-600">
                   {errors.symptoms}
@@ -138,6 +159,7 @@ const NewCase = () => {
               )}
 
               {/* Duration */}
+              <div className="relative">
               <input
                 type="text"
                 name="duration"
@@ -147,6 +169,10 @@ const NewCase = () => {
                 onBlur={handleBlur}
                 className={inputClass("duration")}
               />
+               {submitted && values.duration.trim() && !errors.duration && (
+                <Check className="absolute right-3 top-3.5 text-green-500" size={20} />
+              )}
+              </div>
               {errors.duration && (
                 <p role="alert" className="text-sm text-red-600">
                   {errors.duration}
@@ -154,6 +180,7 @@ const NewCase = () => {
               )}
 
               {/* Optional Fields */}
+              <div className="relative">
               <input
                 type="text"
                 name="aggravating"
@@ -162,8 +189,9 @@ const NewCase = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-[#F5F5F5] rounded-xl border border-[#324B6F]"
               />
-
-              <input
+              </div>
+              <div className="relative">
+               <input 
                 type="text"
                 name="additional"
                 placeholder="Additional Information (Optional)"
@@ -171,7 +199,8 @@ const NewCase = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-3 bg-[#F5F5F5] rounded-xl border border-[#324B6F]"
               />
-
+              </div>
+              {/* buttons  */}
               <div className="flex gap-4 mt-6">
                 <button
                   type="button"
@@ -182,16 +211,39 @@ const NewCase = () => {
                     {/* button only active after forms are filled */}
                 <button
                   type="submit"
-                  disabled={!formIsValid}
+                  disabled={!formIsValid || isLoading}
                   className={`flex-1 font-semibold py-3 rounded-lg transition-colors ${
-                    formIsValid
+                    formIsValid && !isLoading
                       ? "bg-[#324B6F] text-white hover:bg-slate-700"
                       : "bg-gray-400 cursor-not-allowed text-white"
                   }`}
-                >
-                  Analyze Symptoms
-                </button>
-              </div>
+               >
+              {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <circle 
+                  className="opacity-25" 
+                  cx="12" 
+                  cy="12" 
+                  r="10" 
+                  stroke="currentColor" 
+                  strokeWidth="4" 
+                  fill="none"
+                />
+                <path 
+                  className="opacity-75" 
+                  fill="currentColor" 
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+              Analyzing...
+            </span>
+          ) : (
+            "Analyze Symptoms"
+          )}
+                 
+            </button>
+             </div>
             </form>
           </div>
         </div>
