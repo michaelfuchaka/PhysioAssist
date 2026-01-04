@@ -5,6 +5,7 @@ import { ChevronRight,  Check } from 'lucide-react';
 import Link from 'next/link';
 
 const NewCase = () => {
+  // Form state
   const [values, setValues] = useState({
     painRegion: "",
     symptoms: "",
@@ -13,8 +14,10 @@ const NewCase = () => {
     additional: ""
   });
 
+  // Validation state
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validate = (fieldValues = values) => {
     const newErrors = {};
@@ -31,7 +34,7 @@ const NewCase = () => {
 
     return newErrors;
   };
-
+// Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues(prev => ({ ...prev, [name]: value }));
@@ -42,7 +45,7 @@ const NewCase = () => {
     const fieldError = validate({ ...values, [name]: values[name] });
     setErrors(prev => ({ ...prev, [name]: fieldError[name] }));
   };
-
+//  Check if form is valid
   const formIsValid =
     values.painRegion.trim() &&
     values.symptoms.trim() &&
@@ -75,17 +78,29 @@ const NewCase = () => {
             <h2 className="text-xl font-bold mb-4 text-center">
               New Patients Symptom Analysis
             </h2>
-
+        {/* Form submission handling */}
             <form
               className="space-y-4"
-              onSubmit={(e) => {
+              onSubmit ={async (e) =>{
                 e.preventDefault();
                 setSubmitted(true);
                 const validationErrors = validate();
                 setErrors(validationErrors);
 
-                if (Object.keys(validationErrors).length === 0) {
-                  console.log("Form is valid, proceed");
+                if(Object.keys(validationErrors).length === 0){
+                  setIsLoading(true);
+                  try{
+                    // simulate API call
+                    await new Promise(resolve => setTimeout (resolve, 2000));
+                    console.log('form is valid, proceed');
+                    // Navigate to results page or handle success
+                  }
+                  catch (error){
+                    console.error('Analysis Failed', error);
+                  }
+                  finally{
+                    setIsLoading (false);
+                  }
                 }
               }}
             >
@@ -164,7 +179,7 @@ const NewCase = () => {
                 >
                   Save Draft
                 </button>
-
+                    {/* button only active after forms are filled */}
                 <button
                   type="submit"
                   disabled={!formIsValid}
