@@ -157,13 +157,13 @@ const NewCase = () => {
             </div>
           </nav>
 
-          <div className="mt-8 bg-white shadow-sm max-w-lg mx-auto p-6 rounded-xl">
+          <div className="mt-6 bg-white shadow-sm max-w-lg mx-auto p-6 rounded-xl max-h-[85vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4 text-center">
               New Patients Symptom Analysis
             </h2>
         {/* Form submission handling */}
             <form
-              className="space-y-4"
+              className="space-y-3"
               onSubmit ={async (e) =>{
                 e.preventDefault();
                 setSubmitted(true);
@@ -189,10 +189,11 @@ const NewCase = () => {
             >
               
               {/* Pain Region */}
-              <div className="relative">
-                <label htmlFor="painRegion" className="block text-sm font-medium mb-2 text-gray-700">
+              <div>
+              <label htmlFor="painRegion" className="block text-sm font-medium mb-2 text-gray-700">
               Pain Region <span className="text-red-500">*</span>
             </label>
+              <div className="relative">
               <input
                 id="painRegion"
                 type="text"
@@ -212,22 +213,24 @@ const NewCase = () => {
                   {errors.painRegion}
                 </p>
               )}
+              </div>
 
               {/* Symptoms */}
-              <div className="relative">
-                <label htmlFor="symptoms" className="block text-sm font-medium mb-2 text-gray-700">
+               <div>
+               <label htmlFor="symptoms" className="block text-sm font-medium mb-2 text-gray-700">
               Symptoms <span className="text-red-500">*</span>
             </label>
-               <input
-               id="symptoms"
+              <div className="relative">
+               <textarea
+                id="symptoms"
                 name="symptoms"
                 placeholder="e.g., Sharp pain, stiffness, swelling"
                 value={values.symptoms}
                 onChange={handleChange}
                 onBlur={handleBlur}
-               rows={4}
+               rows={3}
                 className={inputClass("symptoms")}
-              />
+              ></textarea>
               {submitted && values.symptoms.trim() && !errors.symptoms && (
               <Check className="absolute right-3 top-3.5 text-green-500" size={20} />
             )}
@@ -241,12 +244,13 @@ const NewCase = () => {
               current={values.symptoms.length} 
               max={charLimits.symptoms}
             />
-
+             </div>
               {/* Duration */}
-              <div className="relative">
-                <label htmlFor="duration" className="block text-sm font-medium mb-2 text-gray-700">
+               <div>
+              <label htmlFor="duration" className="block text-sm font-medium mb-2 text-gray-700">
                   Duration <span className="text-red-500">*</span>
                 </label>
+              <div className="relative">
               <input
                 id="duration"
                 type="text"
@@ -266,43 +270,50 @@ const NewCase = () => {
                   {errors.duration}
                 </p>
               )}
+              </div>
 
               {/* Optional Fields */}
-              <div className="relative">
-                <label htmlFor="aggravating" className="block text-sm font-medium mb-2 text-gray-700">
+              {/* Aggravating Factors */}
+               <div>
+              <label htmlFor="aggravating" className="block text-sm font-medium mb-2 text-gray-700">
                   Aggravating Factors <span className="text-gray-400">(Optional)</span>
                 </label>
-              <input
+              <div className="relative">
+              <textarea
                 id="aggravating"
                 name="aggravating"
                 placeholder="e.g., Walking, bending, standing"
                 value={values.aggravating}
                 onChange={handleChange}
-                rows={3}
+                rows={2}
                 className="w-full px-4 py-3 bg-[#F5F5F5] rounded-xl border border-[#324B6F]"
-              />
+              ></textarea>
               <CharCounter 
               current={values.aggravating.length} 
               max={charLimits.aggravating}
             />
               </div>
-              <div className="relative">
-                <label htmlFor="additional" className="block text-sm font-medium mb-2 text-gray-700">
+            </div>
+            {/* Additional Information */}
+            <div>
+               <label htmlFor="additional" className="block text-sm font-medium mb-2 text-gray-700">
                 Additional Information <span className="text-gray-400">(Optional)</span>
               </label>
-               <input 
+              <div className="relative">
+               <textarea
                 id="additional"
                 name="additional"
                placeholder="e.g., Previous injuries, medications"
                 value={values.additional}
                 onChange={handleChange}
-                rows={3}
+                rows={2}
                 className="w-full px-4 py-3 bg-[#F5F5F5] rounded-xl border border-[#324B6F]"
-              />
+              ></textarea>
               <CharCounter 
                 current={values.additional.length} 
                 max={charLimits.additional}
               />
+              </div>
               </div>
               {/* buttons  */}
               <div className="flex gap-4 mt-6">
