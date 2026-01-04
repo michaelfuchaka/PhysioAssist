@@ -14,6 +14,13 @@ const NewCase = () => {
     additional: ""
   });
 
+    // Character limits
+  const charLimits = {
+    symptoms: 500,
+    aggravating: 300,
+    additional: 500
+  };
+
   // Validation state
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -31,13 +38,40 @@ const NewCase = () => {
     if (!fieldValues.duration?.trim()) {
       newErrors.duration = "Duration is required";
     }
-
+    
+    // Character limit validation
+  if(fieldValues.symptoms?.length > charLimits.symptoms){
+    newErrors.symptoms = `Symptoms must be under ${charLimits.symptoms} characters`;
+  }
+  if(fieldValues.aggravating?.length > charLimits.aggravating){
+    newErrors.aggravating = `Aggravating factors must be under ${charLimits.aggravating} characters`;
+  }
+  if(fieldValues.additional?.length > charLimits.additional){
+    newErrors.additional = `Additional information must be under ${charLimits.additional} characters`;
+  }
     return newErrors;
   };
 // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues(prev => ({ ...prev, [name]: value }));
+  
+
+ // Clear error for this field if it was previously submitted  
+  if(submitted){
+      const updatedValues = { ...values, [name]: value };
+      const fieldError = validate(updatedValues);
+      
+      if (fieldError[name]) {
+        setErrors(prev => ({ ...prev, [name]: fieldError[name] }));
+      } else {
+        setErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors[name];
+          return newErrors;
+        });
+      }
+    }
   };
 
   const handleBlur = (e) => {
@@ -71,6 +105,44 @@ const NewCase = () => {
         ? "border-green-500"
         : "border-[#324B6F]"
     }`;
+
+  // Character counter component
+  const CharCounter = ({ current, max }) => {
+    const percentage = (current / max) * 100;
+    const isNearLimit = percentage > 80;
+    const isOverLimit = percentage > 100;
+    
+   return (
+      <div className={`text-xs text-right mt-1 ${
+        isOverLimit ? 'text-red-600 font-semibold' : 
+        isNearLimit ? 'text-orange-500' : 
+        'text-gray-500'
+      }`}>
+        {current} / {max} characters
+      </div>
+    );
+  };
+
+  const handleSubmit = async () => {
+    setSubmitted(true);
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setIsLoading(true);
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        console.log('Form submitted:', values);
+        alert('Analysis complete! Results would appear here.');
+      } catch (error) {
+        console.error('Analysis Failed', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+ 
 
   return (
     <div>
@@ -118,10 +190,14 @@ const NewCase = () => {
               
               {/* Pain Region */}
               <div className="relative">
+                <label htmlFor="painRegion" className="block text-sm font-medium mb-2 text-gray-700">
+              Pain Region <span className="text-red-500">*</span>
+            </label>
               <input
+                id="painRegion"
                 type="text"
                 name="painRegion"
-                placeholder="Pain Region *"
+                placeholder="e.g., Lower back, Right knee, Left shoulder"
                 value={values.painRegion}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -139,13 +215,17 @@ const NewCase = () => {
 
               {/* Symptoms */}
               <div className="relative">
-              <input
-                type="text"
+                <label htmlFor="symptoms" className="block text-sm font-medium mb-2 text-gray-700">
+              Symptoms <span className="text-red-500">*</span>
+            </label>
+               <input
+               id="symptoms"
                 name="symptoms"
-                placeholder="Symptoms *"
+                placeholder="e.g., Sharp pain, stiffness, swelling"
                 value={values.symptoms}
                 onChange={handleChange}
                 onBlur={handleBlur}
+               rows={4}
                 className={inputClass("symptoms")}
               />
               {submitted && values.symptoms.trim() && !errors.symptoms && (
@@ -157,13 +237,21 @@ const NewCase = () => {
                   {errors.symptoms}
                 </p>
               )}
+              <CharCounter 
+              current={values.symptoms.length} 
+              max={charLimits.symptoms}
+            />
 
               {/* Duration */}
               <div className="relative">
+                <label htmlFor="duration" className="block text-sm font-medium mb-2 text-gray-700">
+                  Duration <span className="text-red-500">*</span>
+                </label>
               <input
+                id="duration"
                 type="text"
                 name="duration"
-                placeholder="Duration *"
+                placeholder="e.g., 3 days, 2 weeks, 6 months"
                 value={values.duration}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -181,23 +269,39 @@ const NewCase = () => {
 
               {/* Optional Fields */}
               <div className="relative">
+                <label htmlFor="aggravating" className="block text-sm font-medium mb-2 text-gray-700">
+                  Aggravating Factors <span className="text-gray-400">(Optional)</span>
+                </label>
               <input
-                type="text"
+                id="aggravating"
                 name="aggravating"
-                placeholder="Aggravating Factors (Optional)"
+                placeholder="e.g., Walking, bending, standing"
                 value={values.aggravating}
                 onChange={handleChange}
+                rows={3}
                 className="w-full px-4 py-3 bg-[#F5F5F5] rounded-xl border border-[#324B6F]"
               />
+              <CharCounter 
+              current={values.aggravating.length} 
+              max={charLimits.aggravating}
+            />
               </div>
               <div className="relative">
+                <label htmlFor="additional" className="block text-sm font-medium mb-2 text-gray-700">
+                Additional Information <span className="text-gray-400">(Optional)</span>
+              </label>
                <input 
-                type="text"
+                id="additional"
                 name="additional"
-                placeholder="Additional Information (Optional)"
+               placeholder="e.g., Previous injuries, medications"
                 value={values.additional}
                 onChange={handleChange}
+                rows={3}
                 className="w-full px-4 py-3 bg-[#F5F5F5] rounded-xl border border-[#324B6F]"
+              />
+              <CharCounter 
+                current={values.additional.length} 
+                max={charLimits.additional}
               />
               </div>
               {/* buttons  */}
