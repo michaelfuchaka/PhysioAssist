@@ -107,3 +107,34 @@ def analyze():
      except Exception as e:
         db.session.rollback()
         return jsonify({'error': f'Database error: {str(e)}'}), 500
+
+@cases_bp.route('/draft', methods=['POST'])
+@jwt_required()
+def save_draft():
+    """Save incomplete form as draft"""
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    
+    try:
+       
+        
+        draft = Draft(
+            user_id=user_id,
+            pain_region=data.get('painRegion', '').strip() or None,
+            symptom_description=data.get('symptoms', '').strip() or None,
+            duration=data.get('duration', '').strip() or None,
+            aggravating_factors=data.get('aggravating', '').strip() or None,
+            additional_information=data.get('additional', '').strip() or None
+        )
+        
+        db.session.add(draft)
+        db.session.commit()
+        
+        return jsonify({
+            'draft_id': draft.id,
+            'message': 'Draft saved successfully'
+        }), 201
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Failed to save draft: {str(e)}'}), 500
