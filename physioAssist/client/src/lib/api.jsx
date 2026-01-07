@@ -93,3 +93,56 @@ export async function getUserStats() {
     if (!response.ok) throw new Error('Failed to fetch stats');
     return response.json();
 }
+
+// Analyze symptoms
+export async function analyzeSymptoms(formData) {
+    const token = localStorage.getItem('access_token');
+    const response = await fetch(`${API_BASE_URL}/api/cases/analyze`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+    });
+    
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Analysis failed');
+    }
+    
+    return response.json();
+}
+
+// Save draft
+export async function saveDraft(formData) {
+    const token = localStorage.getItem('access_token');
+    const response = await fetch(`${API_BASE_URL}/api/cases/draft`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+    });
+    
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to save draft');
+    }
+    
+    return response.json();
+}
+
+// Get case by ID
+export async function getCaseById(caseId) {
+    const token = localStorage.getItem('access_token');
+    const response = await fetch(`${API_BASE_URL}/api/cases/${caseId}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    
+    if (!response.ok) throw new Error('Case not found');
+    return response.json();
+}
