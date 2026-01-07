@@ -1,0 +1,148 @@
+'use client';
+import React from 'react'
+import Sidebar from "@/components/Sidebar";
+import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { getCaseById } from '@/lib/api';
+import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+
+const results = () => {
+  const params = useParams();
+  const caseId = params?.id;
+  const [caseData, setCaseData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+  const fetchCase = async () => {
+    try {
+      const data = await getCaseById(caseId);
+      setCaseData(data);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error:', err);
+      setLoading(false);
+    }
+  };
+  if (caseId) fetchCase();
+}, [caseId]);
+
+if (loading) {
+  return (
+    <div>
+      <Sidebar />
+      <main className="ml-60 p-4 bg-[#F5F5F5] text-[#000000] min-h-screen">
+        <div className='ml-4'>
+          <nav>
+            <div className="flex items-center gap-2 text-lg font-semibold">
+              <Link href="/dashboard">Dashboard</Link>
+              <ChevronRight size={24} />
+              <Link href="/newcase">New Case</Link>
+            </div>
+          </nav>
+          <div className='mt-12 grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <div className='bg-[#F5F5F5] shadow-sm max-w-lg p-6 rounded-xl'>
+              <h2 className='font-semibold text-[#324B6F] text-xl'>Possible Conditions</h2>
+              <p className='text-gray-400 mt-4'>Loading...</p>
+            </div>
+            <div className='flex flex-col gap-4'>
+              <div className='bg-[#F5F5F5] shadow-sm max-w-lg p-6 rounded-xl'>
+                <h2 className='font-semibold text-[#324B6F] text-xl'>Recommended Treatment Plan</h2>
+                <p className='text-gray-400 mt-4'>Loading...</p>
+              </div>
+              <div className='bg-[#F5F5F5] shadow-sm max-w-lg p-6 rounded-xl'>
+                <h2 className='font-semibold text-[#324B6F] text-xl'>Clinical Documentation</h2>
+                <p className='text-gray-400 mt-4'>Loading...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+  return (
+    <div>
+          <Sidebar />
+      <main className="ml-60 p-4 bg-[#F5F5F5] text-[#000000] min-h-screen">
+        <div className='ml-4'>
+            <nav>
+        <div className="flex items-center gap-2 text-lg font-semibold">
+            <Link href="/dashboard">Dashboard</Link>
+            <ChevronRight size={24} className="" />
+            <Link href="/newcase">New Case</Link>
+       
+        </div>
+        </nav>
+        <div className='mt-12 grid grid-cols-1 md:grid-cols-2 gap-4'>
+          {/* possible conditions */}
+        <div className='bg-[#F5F5F5] shadow-sm max-w-lg p-6 rounded-xl '>
+            <h2 className='font-semibold text-[#324B6F] text-xl'>
+                Possible Conditions
+            </h2>
+              {caseData?.ai_conditions?.length > 0 ? (
+        <div className='space-y-3 mb-4'>
+          {caseData.ai_conditions.map((condition, index) => (
+            <div key={index} className='border border-[#324B6F] rounded-lg p-4'>
+              <div className='flex justify-between items-start mb-2'>
+                <h3 className='font-semibold'>{condition.condition}</h3>
+                <span className={`text-xs px-2 py-1 rounded-full ${
+                  condition.probability === 'high' ? 'bg-red-100 text-red-700' :
+                  condition.probability === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                  'bg-green-100 text-green-700'
+                }`}>
+                  {condition.probability}
+                </span>
+              </div>
+              <p className='text-sm text-gray-600 mb-3'>{condition.reasoning}</p>
+              <div className='flex gap-3 text-sm'>
+                <label className='flex items-center gap-1'>
+                  <input type='checkbox' />
+                  Mark as Primary Diagnosis
+                </label>
+                <label className='flex items-center gap-1'>
+                  <input type='checkbox' />
+                  Mark as Relevant
+                </label>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className='text-gray-500 mb-4'>No conditions available</p>
+      )}
+
+      {caseData?.red_flags?.length > 0 && (
+        <div className='bg-yellow-100 border border-yellow-400 rounded-lg p-4 mb-4'>
+          <h3 className='font-semibold text-yellow-800 mb-2'>Red Flags Detected - Consider Referral</h3>
+          <p className='text-sm text-yellow-900'>{caseData.red_flags.join(', ')}</p>
+        </div>
+      )}
+
+   
+          <button className="flex-1 bg-[#E0E0E0] font-medium py-2 px-8 rounded-lg hover:bg-[#D0D0D0] transition-colors whitespace-normal">
+            Reject All & Re-analyze
+          </button>
+        </div>
+           <div className='flex flex-col gap-4'>
+        {/* Recommended treatment plan  */}
+        <div  className='bg-[#F5F5F5] shadow-sm max-w-lg p-6 rounded-xl'>
+            <h2 className='font-semibold text-[#324B6F] text-xl'>
+                Recommended Treatment Plan
+            </h2>
+        </div>
+        {/* Clinical documentation */}
+         <div  className='bg-[#F5F5F5] shadow-sm max-w-lg p-6 rounded-xl'>
+            <h2 className='font-semibold text-[#324B6F] text-xl'>
+                Clinical Documentation
+            </h2>
+        </div>
+        </div>
+        </div>
+        </div>
+      </main>
+    </div>
+  )
+}
+
+export default results
