@@ -130,12 +130,42 @@ if (loading) {
             <h2 className='font-semibold text-[#324B6F] text-xl'>
                 Recommended Treatment Plan
             </h2>
+           {caseData?.treatment_plan ? (
+        <div className='whitespace-pre-line text-sm text-gray-700'>
+            {caseData.treatment_plan}
+        </div>
+    ) : (
+        <p className='text-gray-500'>No treatment plan available</p>
+    )} 
         </div>
         {/* Clinical documentation */}
          <div  className='bg-[#F5F5F5] shadow-sm max-w-lg p-6 rounded-xl'>
             <h2 className='font-semibold text-[#324B6F] text-xl'>
                 Clinical Documentation
             </h2>
+                {caseData?.soap_note ? (
+        <div className='grid grid-cols-2 gap-4'>
+            <div>
+                <h3 className='font-semibold mb-2'>Subjective</h3>
+                <p className='text-sm text-gray-700'>{caseData.soap_note.subjective}</p>
+            </div>
+            <div>
+                <h3 className='font-semibold mb-2'>Objective</h3>
+                <p className='text-sm text-gray-700'>{caseData.soap_note.objective}</p>
+            </div>
+            <div>
+                <h3 className='font-semibold mb-2'>Assessment</h3>
+                <p className='text-sm text-gray-700'>{caseData.soap_note.assessment}</p>
+            </div>
+            <div>
+                <h3 className='font-semibold mb-2'>Plan</h3>
+                <p className='text-sm text-gray-700'>{caseData.soap_note.plan}</p>
+            </div>
+        </div>
+    ) : (
+        <p className='text-gray-500'>No clinical documentation available</p>
+    )}
+
         </div>
         </div>
         </div>
