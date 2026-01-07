@@ -72,6 +72,7 @@ def parse_response(response_text):
         data = json.loads(response_text)
         
         # Extract top 3-5 conditions for relevant_conditions
+        # Avoid crashes incases ai failes
         differential = data.get('differential_diagnosis', [])
         relevant_conditions = [
             {"condition": item["condition"], "probability": item["probability"]}
