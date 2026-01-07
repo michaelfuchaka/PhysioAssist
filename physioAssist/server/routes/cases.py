@@ -198,3 +198,50 @@ def delete_draft(draft_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': f'Failed to delete draft: {str(e)}'}), 500
+    
+@cases_bp.route('/history', methods=['GET'])
+@jwt_required()
+def get_history():
+    """Get all completed cases for history page"""
+    user_id = get_jwt_identity()
+    
+    cases = Case.query.filter_by(user_id=user_id).order_by(Case.created_at.desc()).all()
+    
+    cases_list = [
+        {
+            'id': case.id,
+            'pain_region': case.pain_region,
+            'primary_condition': case.primary_condition,
+            'created_at': case.created_at.isoformat() if case.created_at else None
+        }
+        for case in cases
+    ]
+    
+    return jsonify({'cases': cases_list}), 200
+
+@cases_bp.route('/<int:case_id>', methods=['GET'])
+@jwt_required()
+def get_case(case_id):
+    """Get full case details for results page"""
+    user_id = get_jwt_identity()
+    
+    case = Case.query.filter_by(id=case_id, user_id=user_id).first()
+    
+    if not case:
+        return jsonify({'error': 'Case not found'}), 404
+    
+    return jsonify({
+        'id': case.id,
+        'pain_region': case.pain_region,
+        'symptom_description': case.symptom_description,
+        'duration': case.duration,
+        'aggravating_factors': case.aggravating_factors,
+        'additional_information': case.additional_information,
+        'ai_conditions': case.ai_conditions,
+        'primary_condition': case.primary_condition,
+        'relevant_conditions': case.relevant_conditions,
+        'red_flags': case.red_flags,
+        'treatment_plan': case.treatment_plan,
+        'soap_note': case.soap_note,
+        'created_at': case.created_at.isoformat() if case.created_at else None
+    }), 200    
