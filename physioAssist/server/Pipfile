@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+openai>=1.0.0
 flask = "*"
 flask-sqlalchemy = "*"
 flask-cors = "*"
