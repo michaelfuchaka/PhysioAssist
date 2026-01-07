@@ -158,3 +158,43 @@ def get_drafts():
     ]
     
     return jsonify({'drafts': drafts_list}), 200    
+
+@cases_bp.route('/draft/<int:draft_id>', methods=['GET'])
+@jwt_required()
+def get_draft(draft_id):
+    """Get single draft by ID"""
+    user_id = get_jwt_identity()
+    
+    draft = Draft.query.filter_by(id=draft_id, user_id=user_id).first()
+    
+    if not draft:
+        return jsonify({'error': 'Draft not found'}), 404
+    
+    return jsonify({
+        'id': draft.id,
+        'painRegion': draft.pain_region or '',
+        'symptoms': draft.symptom_description or '',
+        'duration': draft.duration or '',
+        'aggravating': draft.aggravating_factors or '',
+        'additional': draft.additional_information or ''
+    }), 200
+
+@cases_bp.route('/draft/<int:draft_id>', methods=['DELETE'])
+@jwt_required()
+def delete_draft(draft_id):
+    """Delete a draft"""
+    user_id = get_jwt_identity()
+    
+    draft = Draft.query.filter_by(id=draft_id, user_id=user_id).first()
+    
+    if not draft:
+        return jsonify({'error': 'Draft not found'}), 404
+    
+    try:
+        db.session.delete(draft)
+        db.session.commit()
+        return jsonify({'message': 'Draft deleted successfully'}), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Failed to delete draft: {str(e)}'}), 500
