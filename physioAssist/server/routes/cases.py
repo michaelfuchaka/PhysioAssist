@@ -138,3 +138,23 @@ def save_draft():
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': f'Failed to save draft: {str(e)}'}), 500
+    
+@cases_bp.route('/drafts', methods=['GET'])
+@jwt_required()
+def get_drafts():
+    """Get all drafts for current user"""
+    user_id = get_jwt_identity()
+    
+    drafts = Draft.query.filter_by(user_id=user_id).order_by(Draft.saved_at.desc()).all()
+    
+    drafts_list = [
+        {
+            'id': draft.id,
+            'pain_region': draft.pain_region,
+            'symptom_description': draft.symptom_description,
+            'saved_at': draft.saved_at.isoformat() if draft.saved_at else None
+        }
+        for draft in drafts
+    ]
+    
+    return jsonify({'drafts': drafts_list}), 200    
