@@ -42,4 +42,26 @@ Provide your analysis in the following JSON format:
 }}
 
 Important: Respond ONLY with valid JSON, no additional text."""
-     return prompt
+
+    return prompt
+
+def call_openai(prompt):
+    """Call OpenAI API and return response"""
+    try:
+        client = get_openai_client()
+
+        response = client.chat.completions.create(
+             model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are an expert physiotherapist assistant. Respond only with valid JSON."},
+                {"role": "user", "content": prompt}
+            ],
+            response_format={"type": "json_object"},
+            temperature=0.5
+        )
+        
+        return response.choices[0].message.content
+    
+    except Exception as e:
+        raise Exception(f"OpenAI API call failed: {str(e)}")
+
