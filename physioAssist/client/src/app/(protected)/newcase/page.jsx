@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Sidebar from "@/components/Sidebar";
 import { ChevronRight,  Check } from 'lucide-react';
 import Link from 'next/link';
+import { analyzeSymptoms, saveDraft } from '@/lib/api';
+
 
 const NewCase = () => {
   // Form state
@@ -174,13 +176,16 @@ const NewCase = () => {
                   setIsLoading(true);
                   try{
                     // simulate API call
-                    await new Promise(resolve => setTimeout (resolve, 2000));
-                    console.log('form is valid, proceed');
+                    const result = await analyzeSymptoms(values);
+                    // Navigate to results page with case_id
+                    window.location.href = `/results/${result.case_id}`;
+
                     // Navigate to results page or handle success
                   }
                   catch (error){
-                    console.error('Analysis Failed', error);
-                  }
+                      console.error('Analysis Failed', error);
+                      alert(error.message || 'Failed to analyze symptoms. Please try again.');
+                    }
                   finally{
                     setIsLoading (false);
                   }
@@ -319,6 +324,15 @@ const NewCase = () => {
               <div className="flex gap-4 mt-6">
                 <button
                   type="button"
+                  onClick={async () => {
+                    try {
+                      await saveDraft(values);
+                      alert('Draft saved successfully');
+                    } catch (error) {
+                       console.error('Save draft failed:', error);
+                        alert(error.message || 'Failed to save draft');
+                    }
+                  }}
                   className="flex-1 bg-[#E0E0E0] font-semibold py-3 rounded-lg hover:bg-[#D0D0D0]"
                 >
                   Save Draft

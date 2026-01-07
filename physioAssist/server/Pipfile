@@ -3,9 +3,7 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-
 [packages]
-openai = ">=1.0.0"
 flask = "*"
 flask-sqlalchemy = "*"
 flask-cors = "*"
@@ -14,6 +12,7 @@ psycopg2-binary = "*"
 python-dotenv = "*"
 flask-bcrypt = "*"
 alembic = "*"
+openai = "*"
 
 [dev-packages]
 
