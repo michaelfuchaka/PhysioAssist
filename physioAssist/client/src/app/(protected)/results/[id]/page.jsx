@@ -13,6 +13,7 @@ const Results = () => {
   const caseId = params?.id;
   const [caseData, setCaseData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showRejectModal, setShowRejectModal] = useState(false);
   const [selectedConditions, setSelectedConditions] = useState({
   primary: null,
   relevant: []
@@ -168,14 +169,53 @@ if (loading) {
               alert(error.message);
             }
           }}
-          className="flex-1 bg-[#324B6F] text-white font-medium py-2 px-8 rounded-lg hover:bg-slate-700 transition-colors"
+          className="flex-1 bg-[#324B6F] text-white font-medium py-2 px-4 rounded-lg hover:bg-slate-700 transition-colors"
         >
           Save Selections
         </button>
-        <button className="flex-1 bg-[#E0E0E0] font-medium py-2 px-8 rounded-lg hover:bg-[#D0D0D0] transition-colors">
+        <button 
+        onClick={() => setShowRejectModal(true)}
+        title="This will discard current analysis and reanalyze the case"
+        className="flex-1 border-2 border-[#324B6F] text-[#324B6F] bg-white font-medium py-2 px-4 rounded-lg hover:bg-gray-50 transition-colors" >
           Reject All & Re-analyze
         </button>
+        {showRejectModal && (
+        <>
+      <div 
+        className='fixed inset-0 bg-black/50 backdrop-blur-sm z-40'
+        style={{ animation: 'fadeIn 0.3s ease-out' }}
+        onClick={() => setShowRejectModal(false)}
+      ></div>
+      <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="bg-white rounded-lg p-6 max-w-md mx-4">
+      <h3 className="text-lg font-semibold mb-4">Confirm Re-analysis</h3>
+      <p className="text-gray-600 mb-6">
+        Are you sure you want to reject all conditions and start a new analysis?
+      </p>
+      <div className="flex gap-3 justify-end">
+        <button
+          onClick={() => setShowRejectModal(false)}
+          className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={async () => {
+            setShowRejectModal(false);
+            // re-analyze logic will be added here
+          }}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            >
+              Yes, Re-analyze
+            </button>
+          </div>
+        </div>
       </div>
+       </>
+    )}
+          
+          </div>
+    
                 
         </div>
            <div className='flex flex-col gap-4'>
