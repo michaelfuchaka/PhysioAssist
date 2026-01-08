@@ -3,10 +3,10 @@ import React from 'react'
 import Sidebar from "@/components/Sidebar";
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { getCaseById } from '@/lib/api';
+import { getCaseById, updateCaseConditions } from '@/lib/api';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { getCaseById, updateCaseConditions } from '@/lib/api';
+
 
 const Results = () => {
   const params = useParams();
