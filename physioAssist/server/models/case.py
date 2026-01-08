@@ -26,6 +26,9 @@ class Case(db.Model):
 
     language = Column(String(2), default='EN')
 
+    selected_primary = db.Column(db.String(255), nullable=True)
+    selected_relevant = db.Column(JSONB, nullable=True)
+
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 

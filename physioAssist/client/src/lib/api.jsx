@@ -146,3 +146,22 @@ export async function getCaseById(caseId) {
     if (!response.ok) throw new Error('Case not found');
     return response.json();
 }
+
+export async function updateCaseConditions(caseId, selections) {
+  const token = localStorage.getItem('access_token');
+  const response = await fetch(`${API_BASE_URL}/api/cases/${caseId}/conditions`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(selections),
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Failed to update conditions');
+  }
+  
+  return response.json();
+}

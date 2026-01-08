@@ -245,3 +245,32 @@ def get_case(case_id):
         'soap_note': case.soap_note,
         'created_at': case.created_at.isoformat() if case.created_at else None
     }), 200    
+
+@cases_bp.route('/<int:case_id>/conditions', methods=['PUT'])
+@jwt_required()
+def update_conditions(case_id):
+    """Update selected conditions for a case"""
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    
+    case = Case.query.filter_by(id=case_id, user_id=user_id).first()
+    
+    if not case:
+        return jsonify({'error': 'Case not found'}), 404
+    
+    try:
+        # Store selections in a new field or update existing
+        case.selected_primary = data.get('primary')
+        case.selected_relevant = data.get('relevant', [])
+        
+        db.session.commit()
+        
+        return jsonify({
+            'message': 'Conditions updated successfully',
+            'primary': case.selected_primary,
+            'relevant': case.selected_relevant
+        }), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': f'Failed to update: {str(e)}'}), 500

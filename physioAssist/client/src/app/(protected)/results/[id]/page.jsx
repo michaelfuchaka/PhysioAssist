@@ -6,12 +6,17 @@ import Link from 'next/link';
 import { getCaseById } from '@/lib/api';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { getCaseById, updateCaseConditions } from '@/lib/api';
 
 const Results = () => {
   const params = useParams();
   const caseId = params?.id;
   const [caseData, setCaseData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedConditions, setSelectedConditions] = useState({
+  primary: null,
+  relevant: []
+});
 
   useEffect(() => {
   const fetchCase = async () => {
@@ -19,6 +24,14 @@ const Results = () => {
       const data = await getCaseById(caseId);
       setCaseData(data);
       setLoading(false);
+        
+    // Load saved condition selections
+    if (data.selected_primary || data.selected_relevant) {
+      setSelectedConditions({
+        primary: data.selected_primary,
+        relevant: data.selected_relevant || []
+      });
+    }
     } catch (err) {
       console.error('Error:', err);
       setLoading(false);
@@ -26,6 +39,22 @@ const Results = () => {
   };
   if (caseId) fetchCase();
 }, [caseId]);
+
+const handlePrimaryChange = (conditionName) => {
+  setSelectedConditions(prev => ({
+    ...prev,
+    primary: prev.primary === conditionName ? null : conditionName
+  }));
+};
+
+const handleRelevantChange = (conditionName) => {
+  setSelectedConditions(prev => ({
+    ...prev,
+    relevant: prev.relevant.includes(conditionName)
+      ? prev.relevant.filter(c => c !== conditionName)
+      : [...prev.relevant, conditionName]
+  }));
+};
 
 if (loading) {
   return (
@@ -95,16 +124,24 @@ if (loading) {
                 </span>
               </div>
               <p className='text-sm text-gray-600 mb-3'>{condition.reasoning}</p>
-              <div className='flex gap-3 text-sm'>
-                <label className='flex items-center gap-1'>
-                  <input type='checkbox' />
-                  Mark as Primary Diagnosis
-                </label>
-                <label className='flex items-center gap-1'>
-                  <input type='checkbox' />
-                  Mark as Relevant
-                </label>
-              </div>
+             <div className='flex gap-3 text-sm'>
+              <label className='flex items-center gap-1'>
+                <input 
+                  type='checkbox' 
+                  checked={selectedConditions.primary === condition.condition}
+                  onChange={() => handlePrimaryChange(condition.condition)}
+                />
+                Mark as Primary Diagnosis
+              </label>
+              <label className='flex items-center gap-1'>
+                <input 
+                  type='checkbox'
+                  checked={selectedConditions.relevant.includes(condition.condition)}
+                  onChange={() => handleRelevantChange(condition.condition)}
+                />
+                Mark as Relevant
+              </label>
+            </div>
             </div>
           ))}
         </div>
@@ -121,10 +158,25 @@ if (loading) {
       )}
      
       
-        
-          <button className="flex-1 bg-[#E0E0E0] font-medium py-2 px-8 rounded-lg hover:bg-[#D0D0D0] transition-colors whitespace-normal">
-            Reject All & Re-analyze
-          </button>
+        <div className='flex gap-4'>
+        <button 
+          onClick={async () => {
+            try {
+              await updateCaseConditions(caseId, selectedConditions);
+              alert('Conditions saved successfully');
+            } catch (error) {
+              alert(error.message);
+            }
+          }}
+          className="flex-1 bg-[#324B6F] text-white font-medium py-2 px-8 rounded-lg hover:bg-slate-700 transition-colors"
+        >
+          Save Selections
+        </button>
+        <button className="flex-1 bg-[#E0E0E0] font-medium py-2 px-8 rounded-lg hover:bg-[#D0D0D0] transition-colors">
+          Reject All & Re-analyze
+        </button>
+      </div>
+                
         </div>
            <div className='flex flex-col gap-4'>
         {/* Recommended treatment plan  */}
