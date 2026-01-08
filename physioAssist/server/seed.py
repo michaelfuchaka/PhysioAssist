@@ -68,6 +68,7 @@ def seed_data():
                 "assessment": "Rotator Cuff Injury",
                 "plan": "PT 3x/week, ice therapy, NSAIDs"
             },
+            red_flags=[],
             created_at=datetime(2024, 11, 20)
         )
         
@@ -89,6 +90,10 @@ def seed_data():
                 "assessment": "Patellofemoral Pain Syndrome",
                 "plan": "Strengthening exercises, taping"
             },
+                red_flags=[
+        "Night pain",
+        "Unexplained swelling"
+    ],
             created_at=datetime(2024, 11, 15)
         )
         
@@ -110,6 +115,11 @@ def seed_data():
                 "assessment": "Lumbar Strain",
                 "plan": "Core exercises, heat therapy"
             },
+             red_flags=[
+        "Severe morning stiffness",
+        "Pain not relieved by rest",
+        "Recent unexplained weight loss"
+    ],
             created_at=datetime(2024, 11, 15)
         )
         
@@ -131,6 +141,9 @@ def seed_data():
                 "assessment": "Lateral Ankle Sprain",
                 "plan": "RICE, strengthening exercises"
             },
+             red_flags=[
+        "Inability to bear weight"
+    ],
             created_at=datetime(2024, 11, 12)
         )
         
@@ -152,6 +165,10 @@ def seed_data():
                 "assessment": "Trochanteric Bursitis",
                 "plan": "Activity modification, strengthening"
             },
+             red_flags=[
+        "Night pain",
+        "Pain at rest"
+    ],
             created_at=datetime(2024, 11, 10)
         )
         
