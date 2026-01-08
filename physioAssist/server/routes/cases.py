@@ -49,7 +49,7 @@ def analyze():
      symptoms = data.get('symptoms', '').strip()
      duration = data.get('duration', '').strip()
 
-     if not pain_region or not symptoms or duration:
+     if not pain_region or not symptoms or not duration:
          return jsonify({'error':'Pain region, symptoms, and duration are required'}), 400
      
 

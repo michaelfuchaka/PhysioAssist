@@ -57,7 +57,10 @@ def seed_data():
             duration="2 weeks",
             aggravating_factors="Lifting objects overhead, reaching behind back",
             primary_condition="Rotator Cuff Injury",
-            ai_conditions={"differential_diagnoses": ["Rotator Cuff Tear", "Subacromial Impingement", "Biceps Tendinopathy"]},
+           ai_conditions=[
+            {"condition": "Rotator Cuff Tear", "probability": "high", "reasoning": "Classic presentation"},
+            {"condition": "Subacromial Impingement", "probability": "medium", "reasoning": "Pain with overhead activities"}
+        ],
             treatment_plan="Physical therapy focusing on rotator cuff strengthening, pain management with NSAIDs",
             soap_note={
                 "subjective": "Patient reports sharp shoulder pain for 2 weeks",
@@ -75,7 +78,10 @@ def seed_data():
             duration="1 month",
             aggravating_factors="Stair climbing, squatting, prolonged sitting",
             primary_condition="Patellofemoral Pain",
-            ai_conditions={"differential_diagnoses": ["Patellofemoral Pain Syndrome", "Patellar Tendinopathy"]},
+             ai_conditions=[
+            {"condition": "Patellofemoral Pain Syndrome", "probability": "high", "reasoning": "Anterior knee pain pattern"},
+            {"condition": "Patellar Tendinopathy", "probability": "medium", "reasoning": "Activity-related pain"}
+                 ],
             treatment_plan="Quadriceps strengthening, patellar taping, activity modification",
             soap_note={
                 "subjective": "Anterior knee pain for 1 month",
@@ -93,7 +99,10 @@ def seed_data():
             duration="3 days",
             aggravating_factors="Bending forward, prolonged sitting",
             primary_condition="Lumbar Strain",
-            ai_conditions={"differential_diagnoses": ["Lumbar Muscle Strain", "Facet Joint Dysfunction"]},
+           ai_conditions=[
+            {"condition": "Lumbar Muscle Strain", "probability": "high", "reasoning": "Acute onset, mechanical pattern"},
+            {"condition": "Facet Joint Dysfunction", "probability": "medium", "reasoning": "Morning stiffness"}
+        ],
             treatment_plan="Core strengthening, heat therapy, gradual return to activity",
             soap_note={
                 "subjective": "Lower back pain for 3 days",
@@ -111,7 +120,10 @@ def seed_data():
             duration="1 week",
             aggravating_factors="Weight bearing, walking on uneven surfaces",
             primary_condition="Ankle Sprain",
-            ai_conditions={"differential_diagnoses": ["Lateral Ankle Sprain Grade II", "ATFL Tear"]},
+            ai_conditions=[
+            {"condition": "Lateral Ankle Sprain Grade II", "probability": "high", "reasoning": "Inversion injury mechanism"},
+            {"condition": "ATFL Tear", "probability": "medium", "reasoning": "Positive anterior drawer"}
+        ],
             treatment_plan="RICE protocol, ankle strengthening, proprioception training",
             soap_note={
                 "subjective": "Ankle sprain 1 week ago",
@@ -129,7 +141,10 @@ def seed_data():
             duration="2 weeks",
             aggravating_factors="Lying on side, prolonged standing",
             primary_condition="Hip Bursitis",
-            ai_conditions={"differential_diagnoses": ["Trochanteric Bursitis", "Gluteal Tendinopathy"]},
+           ai_conditions=[
+            {"condition": "Trochanteric Bursitis", "probability": "high", "reasoning": "Lateral hip pain, tender point"},
+            {"condition": "Gluteal Tendinopathy", "probability": "medium", "reasoning": "Activity-related pattern"}
+        ],
             treatment_plan="Activity modification, hip strengthening, anti-inflammatory medication",
             soap_note={
                 "subjective": "Lateral hip pain for 2 weeks",
