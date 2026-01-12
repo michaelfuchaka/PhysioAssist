@@ -1,9 +1,13 @@
-import React from 'react'
+'use client'
+import React, {useState} from 'react'
 import Sidebar from "@/components/Sidebar";
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 const History = () => {
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [sortOrder, setSortOrder] = useState('newest');
+
   return (
     <div>
         <Sidebar />
@@ -48,6 +52,42 @@ const History = () => {
           placeholder="Search by symptom, condition, pain region, or date"
         />
          </div>
+        </div>
+        {/* Filters */}
+        <div className='mt-6 flex gap-4 items-center'>
+            {/* Status Filter */}
+          <div>
+            <label htmlFor="status" className="block text-sm font-medium mb-2">
+          Status
+        </label>
+        <select
+          id="status"
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="px-4 py-2 bg-white border border-[#324B6F] rounded-lg focus:outline-none"
+        >
+          <option value="all">All Cases</option>
+          <option value="completed">Completed</option>
+          <option value="draft">Draft</option>
+        </select>
+          </div>
+         
+          {/* Sort By */}
+          <div>
+            <label htmlFor="sort" className="block text-sm font-medium mb-2">
+              Sort By
+            </label>
+            <select
+              id="sort"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              className="px-4 py-2 bg-white border border-[#324B6F] rounded-lg focus:outline-none"
+            >
+              <option value="newest">Date (Newest First)</option>
+              <option value="oldest">Date (Oldest First)</option>
+            </select>
+          </div>
+
         </div>
         </div>
       </main>  
