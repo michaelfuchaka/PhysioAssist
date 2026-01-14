@@ -89,6 +89,45 @@ const History = () => {
           </div>
 
         </div>
+        {/* Case History List */}
+        <div className=" mt-8 table-container w-full rounded-lg  overflow-x-hidden" >
+        {/* Table Header */}
+          <div className="table-header flex bg-[#F6F7FC] font-semibold border-b border-gray-300">
+          <div className="w-1/5 p-3">Date</div>
+          <div className="w-1/5 p-3">Pain Region</div>
+          <div className="w-1/5 p-3">Primary Condition</div>
+          <div className="w-1/5 p-3">Status</div>
+          <div className="w-1/5 p-3">Action</div>
+        </div>
+        {/* Table Body */}
+       {data.map((item, index) => (
+        <div
+          key={item.id}
+          className={` flex items-center ${index % 2 === 0 ? "bg-white" : "bg-blue-50"} border-t border-gray-300`}
+        >
+          <div className="w-1/5 p-3">{item.date}</div>
+          <div className="w-1/5 p-3">{item.painRegion}</div>
+          <div className="w-1/5 p-3">{item.primaryCondition || "—"}</div>
+          <div className="w-1/5 p-3">
+            <span className={`px-2 py-1 rounded-full text-sm ${item.status === "Completed" ? "bg-green-100 text-green-800" : "bg-orange-100 text-orange-800"}`}>
+              {item.status}
+            </span>
+          </div>
+          <div className="w-1/5 p-3 flex gap-2">
+            <button className="text-blue-600">View</button>
+            {item.status === "Draft" && <button className="text-gray-600">Continue</button>}
+          </div>
+        </div>
+      ))}
+            
+        <div className="pagination flex justify-end gap-2 p-3">
+          <button className="px-3 py-1 border rounded">Prev</button>
+          <span className="px-3 py-1">5/6</span>
+          <button className="px-3 py-1 border rounded">Next</button>
+        </div>
+
+        </div>
+
         </div>
       </main>  
 
