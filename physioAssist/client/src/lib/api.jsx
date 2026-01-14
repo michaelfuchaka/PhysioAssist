@@ -165,3 +165,21 @@ export async function updateCaseConditions(caseId, selections) {
   
   return response.json();
 }
+
+// get history cases
+export async function getCaseHistory(){
+    const token = localStorage.getItem('access_token');
+    if (!token) throw new Error('Not authenticated');
+    const response = await fetch(`${API_BASE_URL}/api/cases/history`,{
+        headers:{
+        'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if(!response.ok){
+        const error = await response.json();
+        throw new Error (error.error || 'Failed to fetch case history');
+    }
+
+    return response.json();
+    } 

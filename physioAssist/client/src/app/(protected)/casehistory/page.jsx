@@ -6,7 +6,8 @@ import Link from 'next/link';
 
 const History = () => {
   const [statusFilter, setStatusFilter] = useState('all');
-  const [sortOrder, setSortOrder] = useState('newest');
+  const [sortOrder, setSortOrder] = useState('newest'
+
 
   return (
     <div>
