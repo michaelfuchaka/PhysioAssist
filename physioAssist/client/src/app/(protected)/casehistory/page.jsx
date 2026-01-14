@@ -1,13 +1,31 @@
 'use client'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Sidebar from "@/components/Sidebar";
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import {getCaseHistory} from '@/lib/api';
+
 
 const History = () => {
   const [statusFilter, setStatusFilter] = useState('all');
-  const [sortOrder, setSortOrder] = useState('newest'
+  const [sortOrder, setSortOrder] = useState('newest');
+  const [cases, setCases] = useState([]);
 
+
+  // Fetch case history data
+  useEffect(() => {
+     const fetchCaseHistory = async () => {
+      try {
+        const data = await getCaseHistory();
+        setCases(data.cases); 
+      } catch (error) {
+        console.error('Failed to fetch case history:', error);
+      }
+    };
+
+  fetchCaseHistory();
+
+  } , [] );
 
   return (
     <div>
@@ -101,17 +119,19 @@ const History = () => {
           <div className="w-1/5 p-3">Action</div>
         </div>
         {/* Table Body */}
-       {data.map((item, index) => (
+      {cases.map((item, index) => (
         <div
           key={item.id}
           className={` flex items-center ${index % 2 === 0 ? "bg-white" : "bg-blue-50"} border-t border-gray-300`}
         >
-          <div className="w-1/5 p-3">{item.date}</div>
-          <div className="w-1/5 p-3">{item.painRegion}</div>
-          <div className="w-1/5 p-3">{item.primaryCondition || "—"}</div>
           <div className="w-1/5 p-3">
-            <span className={`px-2 py-1 rounded-full text-sm ${item.status === "Completed" ? "bg-green-100 text-green-800" : "bg-orange-100 text-orange-800"}`}>
-              {item.status}
+           {new Date(item.created_at).toLocaleDateString()}
+          </div>
+          <div className="w-1/5 p-3">{item.pain_region}</div>
+          <div className="w-1/5 p-3">{item.primary_condition || "—"}</div>
+          <div className="w-1/5 p-3">
+             <span className="px-2 py-1 rounded-full text-sm bg-green-100 text-green-800">
+              Completed
             </span>
           </div>
           <div className="w-1/5 p-3 flex gap-2">
