@@ -4,12 +4,16 @@ import Sidebar from "@/components/Sidebar";
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import {getCaseHistory} from '@/lib/api';
+import { useRouter } from 'next/navigation';
+
 
 
 const History = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortOrder, setSortOrder] = useState('newest');
   const [cases, setCases] = useState([]);
+  const router = useRouter();
+
 
 
   // Fetch case history data
@@ -135,7 +139,13 @@ const History = () => {
             </span>
           </div>
           <div className="w-1/5 p-3 flex gap-2">
-            <button className="text-blue-600">View</button>
+            <button 
+              onClick={() => router.push(`/results/${item.id}`)}
+              className="text-blue-600"
+            >
+              View
+            </button>
+
             {item.status === "Draft" && <button className="text-gray-600">Continue</button>}
           </div>
         </div>
