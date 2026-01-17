@@ -36,7 +36,10 @@ const Dashboard = () => {
          const fetchCaseHistory = async () => {
           try {
             const data = await getCaseHistory();
-            setCases(data.cases); 
+             const sortedCases = [...data.cases]
+                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                .slice(0, 5);
+            setCases(sortedCases); 
           } catch (error) {
             console.error('Failed to fetch case history:', error);
           }
