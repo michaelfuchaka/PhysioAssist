@@ -183,3 +183,38 @@ export async function getCaseHistory(){
 
     return response.json();
     } 
+
+    // get drafts cases
+export async function getDraftCases(){
+    const token = localStorage.getItem('access_token');
+    if (!token) throw new Error('Not authenticated');
+    const response = await fetch(`${API_BASE_URL}/api/cases/drafts`,{
+        headers:{
+        'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if(!response.ok){
+        const error = await response.json();
+        throw new Error (error.error || 'Failed to fetch draft cases');
+    }
+
+    return response.json();
+    }
+
+//    delete draft
+export async function deleteDraft(draft_id){
+    const token = localStorage.getItem('access_token');
+    const response = await fetch(`${API_BASE_URL}/api/cases/draft/${draft_id}`,
+        {
+            method: 'DELETE',
+            headers:{
+                  'Authorization': `Bearer ${token}`,
+            },
+        });
+      if(!response.ok){
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to delete draft');
+      }  
+     return response.json();  
+}
