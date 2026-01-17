@@ -4,9 +4,11 @@ import Sidebar from "@/components/Sidebar";
 import { ChevronRight, FileText, TrendingUp, Calendar, Clock, ArrowRight, Activity } from 'lucide-react';
 import Link from 'next/link';
 import { getCurrentUser, getUserStats, getCaseHistory} from '@/lib/api';
+import { useRouter } from 'next/navigation';
 
 
 const Dashboard = () => {
+     const router = useRouter();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [cases, setCases] = useState([]);
@@ -43,6 +45,8 @@ const Dashboard = () => {
       fetchCaseHistory();
     
       } , [] );
+
+    const recentCases = cases.slice(0, 5); 
 
   return (
      
@@ -123,27 +127,70 @@ const Dashboard = () => {
         </div>
 
        </div>
+
        {/* insight and analytics */}
        
        {/* Recent Activity */}
-       <div className="mt-4 bg-white rounded-2xl border border-gray-100 overflow-hidden mr-12">
-            <div className="p-6 border-b border-gray-100">
+     <div className="mt-4 bg-white rounded-2xl border border-gray-100 overflow-hidden mr-12">
+        {/* Header */}
+        <div className="p-6 border-b border-gray-100">
             <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold ">Recent Activity</h2>
-                <Link 
-                    href="/casehistory"
-                    className="text-[#324B6F] hover:text-blue-700 font-medium text-sm flex items-center gap-1 transition-colors"
-                >
-                    View All
-                    <ArrowRight size={16} />
-                </Link>
+            <h2 className="text-xl font-bold">Recent Activity</h2>
+            <Link 
+                href="/casehistory"
+                className="text-[#324B6F] hover:text-blue-700 font-medium text-sm flex items-center gap-1"
+            >
+                View All
+                <ArrowRight size={16} />
+            </Link>
             </div>
-            
-           </div>
-       </div>
+        </div>
 
-       </div>
-      </main>
+        {/* Table  */}
+        <div className="overflow-x-auto">
+        <table className="w-full">
+        <thead className="bg-[#F6F7FC] border-b border-gray-300">
+        <tr>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Date</th>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Pain Region</th>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Primary Condition</th>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Status</th>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {recentCases.map((item, index) => (
+        <tr
+            key={item.id}
+            className={`${index % 2 === 0 ? "bg-white" : "bg-blue-50"} border-t border-gray-300`}
+        >
+            <td className="py-3 px-3 text-sm">
+                {new Date(item.created_at).toLocaleDateString()}
+            </td>
+            <td className="py-3 px-3 text-sm">{item.pain_region}</td>
+            <td className="py-3 px-3 text-sm">{item.primary_condition || "—"}</td>
+            <td className="py-3 px-3">
+                <span className="px-2 py-1 rounded-full text-sm bg-green-100 text-green-800">
+                    Completed
+                </span>
+            </td>
+            <td className="py-3 px-3">
+                <button 
+                    onClick={() => router.push(`/results/${item.id}`)}
+                    className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                >
+                    View
+                </button>
+            </td>
+        </tr>
+        ))}
+        </tbody>
+        </table>
+        </div>
+        </div>
+
+    </div>
+    </main>
     </div>
   )
 }
