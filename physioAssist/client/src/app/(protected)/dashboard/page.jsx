@@ -149,20 +149,20 @@ const Dashboard = () => {
         {/* Table  */}
         <div className="overflow-x-auto">
         <table className="w-full">
-        <thead className="bg-[#F6F7FC] border-b border-gray-300">
+        <thead className="bg-[#F6F7FC] ">
         <tr>
-            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Date</th>
-            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Pain Region</th>
-            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Primary Condition</th>
-            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Status</th>
-            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-700">Action</th>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600 ">Date</th>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">Pain Region</th>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">Primary Condition</th>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">Status</th>
+            <th className="text-left py-3 px-3 text-sm font-semibold text-gray-600">Action</th>
         </tr>
         </thead>
         <tbody>
         {recentCases.map((item, index) => (
         <tr
             key={item.id}
-            className={`${index % 2 === 0 ? "bg-white" : "bg-blue-50"} border-t border-gray-300`}
+            className={`${index % 2 === 0 ? "bg-white" : "bg-gray-50"} `}
         >
             <td className="py-3 px-3 text-sm">
                 {new Date(item.created_at).toLocaleDateString()}
