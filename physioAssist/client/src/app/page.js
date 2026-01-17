@@ -1,3 +1,4 @@
+'use client'
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import React from 'react';
@@ -7,10 +8,21 @@ import { FaBrain } from 'react-icons/fa';
 import { HiOutlineLightBulb } from 'react-icons/hi';
 import { MdOutlineAssignment, MdLanguage ,  MdAssignmentAdd,MdOutlineSearch  } from 'react-icons/md';
 import { getCurrentUser } from '@/lib/api';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
-export default function Home() {
-     
 
+export default  function Home() {
+  const [user, setUser] = useState(null);
+    useEffect(() => {
+    async function checkUser() {
+      const userData = await getCurrentUser();
+      setUser(userData);
+    }
+    checkUser();
+  }, []);
+
+  const startHref = user ? "/newcase" : "/auth/signup";
 
   return (
     <div className='bg-[#FFFFFF] min-h-screen '>
@@ -37,12 +49,13 @@ export default function Home() {
           <p className='text-lg md:text-xl text-white font-medium mt-4' >
           AI-powered guidance for faster evaluations, note taking, and treatment planning  
           </p>
-
+              <Link href={startHref}>
           <button className='text-[#FFFFFF] mt-8 font-semibold  text-xl bg-[#324B6F] px-8 py-4 
           border-2  border-[#324B6F] rounded-[20px]  shadow-lg hover:shadow-xl hover:bg-white hover:text-[#324B6F] 
           transition-all duration-300 hover:-translate-y-1 '>
           Start Assessment
         </button>
+        </Link>
         </div>
           
         </div>
