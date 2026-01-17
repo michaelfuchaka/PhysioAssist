@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 
 
 const History = () => {
-  const [statusFilter, setStatusFilter] = useState('all');
   const [sortOrder, setSortOrder] = useState('newest');
   const [cases, setCases] = useState([]);
   const router = useRouter();
@@ -76,25 +75,9 @@ const History = () => {
         />
          </div>
         </div>
-        {/* Filters */}
+        {/* Filter */}
         <div className='mt-6 flex gap-4 items-center'>
-            {/* Status Filter */}
-          <div>
-            <label htmlFor="status" className="block text-sm font-medium mb-2">
-          Status
-        </label>
-        <select
-          id="status"
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-2 bg-white border border-[#324B6F] rounded-lg focus:outline-none"
-        >
-          <option value="all">All Cases</option>
-          <option value="completed">Completed</option>
-          <option value="draft">Draft</option>
-        </select>
-          </div>
-         
+
           {/* Sort By */}
           <div>
             <label htmlFor="sort" className="block text-sm font-medium mb-2">
